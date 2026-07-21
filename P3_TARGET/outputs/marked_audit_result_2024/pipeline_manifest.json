@@ -1,14 +1,14 @@
 {
-  "pipeline": "marked_audit_result_index_2020",
-  "requested_report_year": "2020",
+  "pipeline": "marked_audit_result_index",
+  "requested_report_year": "2024",
   "detected_report_year": "2020",
-  "run_started_at": "2026-07-21T16:11:17.178347+09:00",
-  "run_finished_at": "2026-07-21T16:11:26.679519+09:00",
+  "run_started_at": "2026-07-21T15:43:08.736015+09:00",
+  "run_finished_at": "2026-07-21T15:43:18.513172+09:00",
   "project_root": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET",
-  "notebook": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/03_2020_marked_audit_result.ipynb",
+  "notebook": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/03_marked_audit_result_index_2024.ipynb",
   "input_selection": {
     "source_directory": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/target_mark_pdf",
-    "selection_rule": "marked_integrated_highlight_rich_version",
+    "selection_rule": "marked_integrated_superset",
     "canonical_pdf": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/target_mark_pdf/2020년도_국정감사결과_형광펜_통합본.pdf",
     "sha256": "39b22045f62625a1dea321a714e041b119632f640f208da55c2cbb5ea8088d86",
     "page_count": 165,
@@ -34,11 +34,11 @@
     ]
   },
   "registry": {
-    "path": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/data_parse/pdf_crawler/control_registry.parquet",
+    "path": null,
     "mapping_status": "unmapped",
     "mapping_warning": "No unique meeting_id matched",
-    "meeting_id": "UNMAPPED_REPORT_2020",
-    "meeting_year": "20",
+    "meeting_id": "UNMAPPED_REPORT_2024",
+    "meeting_year": "24",
     "matched_candidate_count": 0
   },
   "flags": {
@@ -64,23 +64,20 @@
     "mapped_issues": 110,
     "unresolved_issues": 0,
     "native_parsed": 110,
-    "ocr_attempted": 4,
+    "ocr_attempted": 5,
     "ocr_recovered": 0,
     "status": {
-      "complete": 56,
+      "complete": 55,
       "active": 54,
       "uncomplete": 0,
-      "null": 0
+      "null": 1
     },
     "nulls": {
       "issue_text_empty": 0,
       "action_text_null_literal": 4,
       "future_plan_text_null_literal": 43,
-      "status_null_literal": 0
-    },
-    "second_pass_reviewed": 110,
-    "second_pass_passed": 110,
-    "second_pass_flagged": []
+      "status_null_literal": 1
+    }
   },
   "mapping": {
     "marker_source_counts": {
@@ -133,9 +130,7 @@
     "all_issue_text_present": true,
     "status_allowed": true,
     "parse_source_allowed": true,
-    "source_page_in_range": true,
-    "second_pass_all_selected_reviewed": true,
-    "second_pass_all_passed": true
+    "source_page_in_range": true
   },
   "reload_checks": {
     "parquet_exists": true,
@@ -150,21 +145,22 @@
   "ocr_failures": [],
   "warnings": [
     "inputs/pdf was empty; used target_mark_pdf controlled fallback",
-    "Multiple same-year PDFs audited sequentially; marked integrated version selected",
+    "Multiple supplied PDFs audited sequentially; marked integrated superset selected",
+    "Requested report year 2024, but title page detected 2020",
     "No unique meeting_id matched",
     "Native body numbering defect: {'missing_issue_nos': [281], 'duplicate_issue_nos': [280]}"
   ],
   "outputs": {
-    "parquet": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2020/2020_marked_issue_mapping.parquet",
-    "review_csv": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2020/2020_marked_issue_mapping.csv",
-    "quality_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/reports/2020_MARKED_MAPPING_QUALITY.md",
-    "run_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2020/2020_RUN_REPORT.md",
-    "log": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2020/logs/2020_marked_audit_result.log",
+    "parquet": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_audit_result_2024/marked_issue_mapping.parquet",
+    "review_csv": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_audit_result_2024/marked_issue_mapping_review.csv",
+    "quality_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/reports/MARKED_MAPPING_QUALITY.md",
+    "run_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_audit_result_2024/RUN_REPORT.md",
+    "log": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_audit_result_2024/logs/marked_audit_result.log",
     "sha256": {
-      "parquet": "524c4a7ccbd3b817a930dccc3ae8b2435bf21fc4be4d3ccc839781b77303ca17",
-      "review_csv": "b8f766aaf8a972e1d8b9236bd4361ea2c4cb8d311e83f1f368cfb556d3d51733",
-      "quality_report": "4eb68261859e27334844fdce8759c1dccefe2b93309694062378069b8a5d6c30"
+      "parquet": "3f615981a1af43a2cd8204b751a91a950d25ebe3e8dc8bdc9d0b80e335a5907d",
+      "review_csv": "0e8cd383c61b21cbf3f689b29ca5354c8252768cc456c55c332d02f72d3f8915",
+      "quality_report": "fac2da2fc5ca61780e2218aad0207cd452fab429845690bd5c4254f230eb1128"
     }
   },
-  "final_status": "COMPLETE"
+  "final_status": "PARTIAL"
 }

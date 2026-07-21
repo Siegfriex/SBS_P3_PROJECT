@@ -2,8 +2,8 @@
   "pipeline": "marked_audit_result_index_2024",
   "requested_report_year": "2024",
   "detected_report_year": "2024",
-  "run_started_at": "2026-07-21T16:04:21.732642+09:00",
-  "run_finished_at": "2026-07-21T16:04:27.067035+09:00",
+  "run_started_at": "2026-07-21T16:11:20.505866+09:00",
+  "run_finished_at": "2026-07-21T16:11:25.681647+09:00",
   "project_root": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET",
   "notebook": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/03_2024_marked_audit_result.ipynb",
   "input_selection": {
