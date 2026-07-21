@@ -1,0 +1,117 @@
+{
+  "stage": "PDF_CRAWL_AND_DOWNLOAD",
+  "execution_contract_status": "CRAWLER_EXECUTION_CONTRACT_ACTIVE",
+  "execution_result_status": "COMPLETE",
+  "crawl_gate": "CRAWL_GATE_PASS",
+  "run_started_at": "2026-07-21T05:25:45.779447+00:00",
+  "run_finished_at": "2026-07-21T05:27:18.323946+00:00",
+  "repo_root": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE",
+  "git_branch": "P3_DATA_RAW",
+  "git_commit": "236ad55872afe97df3c9308f9fbd3535f5d287be",
+  "input_file": {
+    "path": "data_origin/국정감사회의록_문화체육 2020~.xlsx",
+    "size_bytes": 20568,
+    "sha256": "a4e7bb5ae119556e9c506d74cc0566caaf59a753f3f2c26cb30004ad486ea675",
+    "selected_sheet": "Sheet1"
+  },
+  "registry_critical_gate": {
+    "checks": [
+      {
+        "check": "MISSING_MEETING_ID",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "DUPLICATE_MEETING_ID_PATH_COLLISION",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "MISSING_SOURCE_URL",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "NON_HTTP_SCHEME_URL",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "UNSAFE_MEETING_ID_FILENAME",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "EXPECTED_PDF_PATH_COLLISION",
+        "failed_count": 0,
+        "detail": ""
+      },
+      {
+        "check": "DUPLICATE_SOURCE_URL_ACROSS_MEETING_IDS",
+        "failed_count": 0,
+        "detail": "row-level pending, not a hard gate failure"
+      }
+    ],
+    "status": "PASSED",
+    "n_critical_failed_rows": 0,
+    "n_total_rows": 42
+  },
+  "existing_pdf_circuit_breaker": {
+    "triggered": false,
+    "meeting_id": null,
+    "error_message": null
+  },
+  "row_counts": {
+    "total": 42,
+    "downloaded": 42,
+    "reused_existing": 0,
+    "failed": 0,
+    "invalid_url": 0,
+    "invalid_content": 0,
+    "pending": 0
+  },
+  "source_domains": [
+    "record.assembly.go.kr"
+  ],
+  "outputs": {
+    "control_registry": "data_parse/pdf_crawler/control_registry.parquet",
+    "download_log": "data_parse/pdf_crawler/download_log.parquet",
+    "crawl_quality": "data_parse/pdf_crawler/crawl_quality.parquet",
+    "log_file": "data_parse/pdf_crawler/logs/pdf_crawler.log"
+  },
+  "environment": {
+    "python_version": "3.12.3",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "pandas": "3.0.3",
+    "pyarrow": "25.0.0",
+    "requests": "2.31.0",
+    "pymupdf": "1.28.0",
+    "nbformat": "5.10.4",
+    "git_branch": "P3_DATA_RAW",
+    "git_commit": "236ad55872afe97df3c9308f9fbd3535f5d287be"
+  },
+  "http_policy": {
+    "max_workers": 1,
+    "request_interval_seconds": 1.5,
+    "max_retries": 4,
+    "retry_backoff_seconds": [
+      2,
+      4,
+      8,
+      16
+    ],
+    "connect_timeout_seconds": 10,
+    "read_timeout_seconds": 180,
+    "user_agent": "SBS-DSJA-P3-Culture-PDF-Crawler/1.0"
+  },
+  "not_generated_this_stage": [
+    "pages.parquet",
+    "blocks.parquet",
+    "speaker_turns.parquet",
+    "retrieval_segments.parquet",
+    "audit_minutes.sqlite",
+    "OCR_output",
+    "TFIDF_output",
+    "embedding_output"
+  ]
+}
