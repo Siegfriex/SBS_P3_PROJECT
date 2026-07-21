@@ -1,0 +1,156 @@
+{
+  "pipeline": "marked_audit_result_index_2022",
+  "requested_report_year": "2022",
+  "detected_report_year": "2022",
+  "run_started_at": "2026-07-21T17:41:02.129034+09:00",
+  "run_finished_at": "2026-07-21T17:41:12.182348+09:00",
+  "project_root": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET",
+  "notebook": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/03_2022_marked_audit_result.ipynb",
+  "input_selection": {
+    "source_directory": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/target_mark_pdf",
+    "selection_rule": "single_year_validated_pdf",
+    "canonical_pdf": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/target_mark_pdf/2022_국정감사결과_요구사항1-259_260-끝_병합.pdf",
+    "sha256": "9390284efe2f80a8b544cfe2da900805ed02941db8a1a7a37a5dec960fb0b4cb",
+    "page_count": 159,
+    "sequential_pdf_audits": [
+      {
+        "path": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/target_mark_pdf/2022_국정감사결과_요구사항1-259_260-끝_병합.pdf",
+        "filename": "2022_국정감사결과_요구사항1-259_260-끝_병합.pdf",
+        "sha256": "9390284efe2f80a8b544cfe2da900805ed02941db8a1a7a37a5dec960fb0b4cb",
+        "page_count": 159,
+        "highlight_count": 246,
+        "detected_report_year": "2022",
+        "title_page_excerpt": "2022년도 국정감사결과시정및처리 요구사항에대한처리결과보고서 (문화체육관광부소관) 2023. 11. 대한민국정부"
+      }
+    ]
+  },
+  "registry": {
+    "path": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/data_parse/pdf_crawler/control_registry.parquet",
+    "mapping_status": "unmapped",
+    "mapping_warning": "No unique meeting_id matched",
+    "meeting_id": "UNMAPPED_REPORT_2022",
+    "meeting_year": "22",
+    "matched_candidate_count": 0
+  },
+  "flags": {
+    "RUN_PDF_AUDIT": true,
+    "RUN_ANNOTATION_PARSE": true,
+    "RUN_TOC_PARSE": true,
+    "RUN_BODY_PARSE": true,
+    "RUN_MAPPING": true,
+    "RUN_NATIVE_STATUS": true,
+    "RUN_OCR_FALLBACK": true,
+    "RUN_EXPORT": true,
+    "RUN_FULL_PAGE_OCR": false,
+    "RUN_TFIDF": false,
+    "RUN_EMBEDDING": false,
+    "RUN_SQLITE": false,
+    "RUN_LLM": false
+  },
+  "counts": {
+    "highlight_annotations": 246,
+    "front_matter_annotations": 1,
+    "toc_annotations": 101,
+    "body_annotations": 144,
+    "selected_issues": 116,
+    "mapped_issues": 116,
+    "unresolved_issues": 0,
+    "native_parsed": 116,
+    "ocr_attempted": 3,
+    "ocr_recovered": 0,
+    "status": {
+      "complete": 77,
+      "active": 39,
+      "uncomplete": 0,
+      "null": 0
+    },
+    "nulls": {
+      "issue_text_empty": 0,
+      "action_text_null_literal": 3,
+      "future_plan_text_null_literal": 56,
+      "status_null_literal": 0
+    },
+    "second_pass_reviewed": 116,
+    "second_pass_passed": 116,
+    "second_pass_flagged": []
+  },
+  "mapping": {
+    "marker_source_counts": {
+      "toc_and_body": 93,
+      "body_only": 20,
+      "toc_only": 3
+    },
+    "front_matter_non_selector_annotations": 1,
+    "unresolved_toc_annotations": 0,
+    "unresolved_body_annotations": 0,
+    "body_numbering_defects": {
+      "missing_issue_nos": [],
+      "duplicate_issue_nos": []
+    }
+  },
+  "schemas": {
+    "canonical_columns": [
+      "issue_id",
+      "meeting_id",
+      "issue_no",
+      "issue_text",
+      "action_text",
+      "future_plan_text",
+      "status",
+      "source_page",
+      "parse_source"
+    ],
+    "review_columns": [
+      "meeting_id",
+      "meeting_year",
+      "issue_no",
+      "issue_text",
+      "action_text",
+      "future_plan_text",
+      "status",
+      "source_page"
+    ]
+  },
+  "quality_checks": {
+    "canonical_columns_exact": true,
+    "review_columns_exact": true,
+    "issue_id_unique": true,
+    "issue_no_unique": true,
+    "all_selected_issues_mapped": true,
+    "all_toc_annotations_mapped": true,
+    "all_body_annotations_mapped": true,
+    "all_issue_text_present": true,
+    "status_allowed": true,
+    "parse_source_allowed": true,
+    "source_page_in_range": true,
+    "second_pass_all_selected_reviewed": true,
+    "second_pass_all_passed": true
+  },
+  "reload_checks": {
+    "parquet_exists": true,
+    "csv_exists": true,
+    "parquet_rows_match": true,
+    "csv_rows_match": true,
+    "parquet_columns_exact": true,
+    "csv_columns_exact": true,
+    "parquet_issue_id_unique": true,
+    "csv_literal_null_contract": true
+  },
+  "ocr_failures": [],
+  "warnings": [
+    "No unique meeting_id matched"
+  ],
+  "outputs": {
+    "parquet": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2022/2022_marked_issue_mapping.parquet",
+    "review_csv": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2022/2022_marked_issue_mapping.csv",
+    "quality_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/reports/2022_MARKED_MAPPING_QUALITY.md",
+    "run_report": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2022/2022_RUN_REPORT.md",
+    "log": "/home/sieg/projects-wsl/SBS_dataScience/DSJA/P3_CULTURE/P3_TARGET/outputs/marked_parallel/2022/logs/2022_marked_audit_result.log",
+    "sha256": {
+      "parquet": "e847cbf18e6bb7f99535fc344dc84d1bfcfe769525bfe800964c34a4bd50cd04",
+      "review_csv": "11bf1a9776d20c2adb1433e61428af8b5fe6cde57c20ffdae3420d99e6e81462",
+      "quality_report": "7affe55ee659449b51b144461b641732477de4096d642af335042d804eef42d4"
+    }
+  },
+  "final_status": "COMPLETE"
+}
