@@ -1,0 +1,21 @@
+﻿behavior_hit_id,answer_unit_id,behavior_code,lexicon_pattern_id,char_start,char_end,span_text,context_text,match_variant,hit_confidence,is_suppressed,suppression_reason
+BHIT_16B13038249F,ANS_050308_T00893_T00893,A8,LEX_A8_006,319,323,8.6%,지원금 지급하는것규모가4조4000억아니겠습니까? 여기에저희들이추정하기로는8.6%에해당되는 3785억원정도가어떻든우리문화.체육.관광 이쪽분야에쓸것으로보이,normalized_regex,0.3,True,interrogative_context
+BHIT_2F6E3D7D64E1,ANS_050350_T00415_T00415,A8,LEX_A8_007,42,45,99건,"화재청장 정재숙 글쎄요, 한 300여 건 될까 요? 저희가 올해가 벌써 99건이니까요.",normalized_regex,0.3,True,interrogative_context
+BHIT_C719A578179E,ANS_050350_T00435_T00435,A8,LEX_A8_007,11,13,4건,◯문화재청장 정재숙 4건이오?,normalized_regex,0.3,True,interrogative_context
+BHIT_7618B0CF3867,ANS_051354_T00278_T00278,A2,LEX_A2_001,74,79,확인해 보, 인해서 북한 지원이 불가한데 정부가 저런 고민을 했을까요? 제가 한번 확인해 보겠습니다.,normalized_regex,0.3,True,interrogative_context
+BHIT_8312B91E37D8,ANS_051558_T00377_T00377,A2,LEX_A2_004,56,60,알지 못,"원님, 저와 저 희 기관과 관련되지 않은 부분에 관한 것은 제가 자세히 알지 못하는 부분들이 많아서 답변드리기 적절치 않다는 말씀을 우선 먼저 드리겠고",normalized_regex,0.3,True,negation_context
+BHIT_F9F15E2D5442,ANS_052315_T00162_T00162,A2,LEX_A2_001,17,22,확인해 보,◯문화재청장 최응천 아닙니다. 확인해 보시 면......,normalized_regex,0.3,True,negation_context
+BHIT_38D4B59B787A,ANS_053329_T00408_T00408,A1,LEX_A1_003,15,20,잘 모르겠,◯문화체육관광부장관 유인촌 잘 모르겠습니다. 6대 드라마요?,normalized_regex,0.3,True,interrogative_context
+BHIT_B43286A6787D,ANS_053357_T01830_T01830,A1,LEX_A1_001,31,37,기억이 나지,◯한국관광공사부사장겸관광산업본부장 이재환 제 가 정확히 기억이 나지 않습니다.,normalized_regex,0.3,True,negation_context
+BHIT_4777F63895FA,ANS_053501_T00673_T00673,A1,LEX_A1_001,35,39,기억나지,◯증인 김성재 제가 그 업무와 관련해서 특별히 사인한 것은 잘 기억나지 않습니다만 없는 걸로 알고 있습니다. 열독률 조사는 예산을 쓰기 때문 ,normalized_regex,0.3,True,negation_context
+BHIT_60ACA4820088,ANS_054269_T00117_T00117,A1,LEX_A1_003,21,25,잘모르겠,◯국가유산청장최응천 그것은제가거기까지는잘모르겠고요. 사리를반환하겠다는 얘기를먼저한건아닙니다.,normalized_regex,0.3,True,negation_context
+BHIT_A953594FF42B,ANS_054519_T00303_T00303,A1,LEX_A1_001,21,26,기억이나지,◯국립박물관문화재단사장정용석 저는지금은기억이나지않습니다. 그런데지엔씨 사장은아닙니다.,normalized_regex,0.3,True,negation_context
+BHIT_5B3823481A9D,ANS_054519_T00759_T00759,A1,LEX_A1_001,21,26,기억이나지,◯국립박물관문화재단사장정용석 그것은저는기억이나지않습니다. 거기서못만났 습니다.,normalized_regex,0.3,True,negation_context
+BHIT_53FAE6E2EEE6,ANS_054576_T01009_T01009,A1,LEX_A1_001,28,33,기억이나지,"◯증인홍기용 2022년12월에그렇게한게생각이나지, 기억이나지않습니다.",normalized_regex,0.3,True,negation_context
+BHIT_511DE91ABCD8,ANS_054576_T01253_T01253,A1,LEX_A1_001,18,23,기억이나지,"◯증인김병철 그러니까옛날, 그때잘기억이나지않습니다.",normalized_regex,0.3,True,negation_context
+BHIT_64C05CE2E0EF,ANS_054622_T01137_T01137,A1,LEX_A1_001,34,40,기억이 나지,"◯증인하종대 그런데제가기억을더듬어봤는데요, 누구하고했는지정확히기억이 나지않습니다, 사실. 그래서제가답변을......",normalized_regex,0.3,True,negation_context
+BHIT_CFA036691D52,ANS_054622_T01239_T01239,A1,LEX_A1_001,41,46,기억이나지,문화체육관광부기획조정실장황성운 무슨말씀이십니까? 행정관들이름은정확하게제가기억이나지않습니다.,normalized_regex,0.3,True,negation_context
+BHIT_71313E722168,ANS_054622_T01724_T01724,A8,LEX_A8_006,20,23,22%,"◯증인정몽규 어떻게그게딴얘기입니까? 22% 내면예를들어서100만불주면, 200 만불을저희가내야되고......",normalized_regex,0.3,True,interrogative_context
+BHIT_792512C7030B,ANS_N053482_T00206_T00206,A1,LEX_A1_001,28,33,기억이나지,◯국립박물관문화재단사장정용석 거기에대해서는저도솔직히기억이나지않습니다.,normalized_regex,0.3,True,negation_context
+BHIT_1EC85105C786,ANS_N053485_T00581_T00581,A1,LEX_A1_001,30,35,기억이나지,◯대한체육회장유승민 대략제가알기로는...... 확실하게기억이나지않습니다.,normalized_regex,0.3,True,negation_context
+BHIT_A3B6FAD4D7F4,ANS_N053485_T01735_T01735,A1,LEX_A1_001,24,29,기억이나지,"◯대한장애인체육회장정진완 예, 전에정확하게는기억이나지않습니다마는......",normalized_regex,0.3,True,negation_context

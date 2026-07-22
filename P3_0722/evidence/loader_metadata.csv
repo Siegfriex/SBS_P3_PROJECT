@@ -1,0 +1,5 @@
+﻿source,path,encoding,role
+canonical_etl,../data_parse/audit_minutes_pdf_etl,parquet,validated P0
+target_2020,../P3_TARGET/outputs/marked_parallel/2020,utf-8-sig,approved marker
+target_2022,../P3_TARGET/outputs/marked_parallel/2022,utf-8-sig,approved marker
+target_2024,../P3_TARGET/outputs/marked_parallel/2024,utf-8-sig,approved marker

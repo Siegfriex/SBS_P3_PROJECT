@@ -1,0 +1,5998 @@
+{
+  "document": {
+    "title": "P3_CULTURE 데이터 명세·세부 스키마",
+    "document_id": "P3-CULTURE-DATA-SPEC-V1",
+    "version": "1.0.0",
+    "status": "Production Data Contract Draft",
+    "generated_at": "2026-07-22T04:16:54.424849+00:00",
+    "physical_names": "English snake_case",
+    "logical_labels": "Korean"
+  },
+  "entities": [
+    {
+      "layer": "L0_governance",
+      "name": "pipeline_runs",
+      "logical_name_ko": "파이프라인 실행",
+      "grain": "파이프라인 실행 1회",
+      "primary_key": [
+        "pipeline_run_id"
+      ],
+      "columns": [
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "전 산출물을 묶는 실행 식별자.",
+          "rule": "RUN_{UTC}_{hash6}",
+          "example": "RUN_20260722T031500Z_A1B2C3"
+        },
+        {
+          "name": "pipeline_name",
+          "logical_name_ko": "파이프라인명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "논리 파이프라인명.",
+          "rule": "",
+          "example": "audit_minutes_pdf_etl"
+        },
+        {
+          "name": "pipeline_stage",
+          "logical_name_ko": "파이프라인 단계",
+          "dtype": "category",
+          "nullable": false,
+          "description": "실행 단계.",
+          "rule": "canonical_etl|target_union|retrieval|qrels|qa_pair|behavior_label|embedding|projection|frontend_bundle",
+          "example": "retrieval"
+        },
+        {
+          "name": "run_mode",
+          "logical_name_ko": "실행 모드",
+          "dtype": "category",
+          "nullable": false,
+          "description": "실행 범위.",
+          "rule": "pilot|full|audit|repair",
+          "example": "full"
+        },
+        {
+          "name": "schema_version",
+          "logical_name_ko": "스키마 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "본 데이터 계약 버전.",
+          "rule": "Semantic Versioning",
+          "example": "1.0.0"
+        },
+        {
+          "name": "parser_version",
+          "logical_name_ko": "파서 버전",
+          "dtype": "string",
+          "nullable": true,
+          "description": "PDF 파서·세그먼터 버전.",
+          "rule": "비파싱 단계는 null",
+          "example": "1.0.1"
+        },
+        {
+          "name": "code_commit",
+          "logical_name_ko": "코드 커밋",
+          "dtype": "string",
+          "nullable": true,
+          "description": "Git commit SHA.",
+          "rule": "",
+          "example": "3e94093af3ad..."
+        },
+        {
+          "name": "config_hash",
+          "logical_name_ko": "설정 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "정렬된 설정 JSON의 SHA-256.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "input_manifest_hash",
+          "logical_name_ko": "입력 매니페스트 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "입력 파일·해시 목록의 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "started_at",
+          "logical_name_ko": "시작 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "실행 시작 UTC.",
+          "rule": "",
+          "example": "2026-07-22T03:15:00Z"
+        },
+        {
+          "name": "finished_at",
+          "logical_name_ko": "종료 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": true,
+          "description": "실행 종료 UTC.",
+          "rule": "실행 중이면 null",
+          "example": ""
+        },
+        {
+          "name": "run_status",
+          "logical_name_ko": "실행 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "실행 결과.",
+          "rule": "running|passed|conditional_pass|failed|cancelled",
+          "example": "passed"
+        },
+        {
+          "name": "output_manifest_path",
+          "logical_name_ko": "출력 매니페스트 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "산출물 매니페스트 경로.",
+          "rule": "",
+          "example": "outputs/.../pipeline_manifest.json"
+        },
+        {
+          "name": "error_message",
+          "logical_name_ko": "오류 요약",
+          "dtype": "string",
+          "nullable": true,
+          "description": "최종 오류 요약.",
+          "rule": "정상 실행은 null",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [],
+      "storage": "parquet + json manifest",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L0_governance",
+      "name": "source_documents",
+      "logical_name_ko": "원천 문서",
+      "grain": "원천 파일·문서 1개",
+      "primary_key": [
+        "source_document_id"
+      ],
+      "columns": [
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PDF·Excel·CSV·외부 검증 문서 식별자.",
+          "rule": "DOC_{type}_{year}_{hash8}",
+          "example": "DOC_RESULT_2024_711E69F6"
+        },
+        {
+          "name": "document_type",
+          "logical_name_ko": "문서 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "원천 문서 유형.",
+          "rule": "meeting_minutes|result_report|registry|marker_export|external_verification|editorial_reference",
+          "example": "result_report"
+        },
+        {
+          "name": "document_title",
+          "logical_name_ko": "문서 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 제목.",
+          "rule": "",
+          "example": "2024년도 국정감사 처리결과 보고서"
+        },
+        {
+          "name": "source_year",
+          "logical_name_ko": "원천 연도",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "문서 대표 연도.",
+          "rule": "YYYY",
+          "example": "2024"
+        },
+        {
+          "name": "audit_cycle",
+          "logical_name_ko": "감사 주기",
+          "dtype": "string",
+          "nullable": true,
+          "description": "내부 시간 적격성 주기.",
+          "rule": "",
+          "example": "AUDIT_2024"
+        },
+        {
+          "name": "source_url",
+          "logical_name_ko": "원문 URL",
+          "dtype": "string",
+          "nullable": true,
+          "description": "공식 원문 URL.",
+          "rule": "공개 URL만",
+          "example": ""
+        },
+        {
+          "name": "local_path",
+          "logical_name_ko": "로컬 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "프로젝트 내부 저장 경로.",
+          "rule": "프론트에 절대경로 노출 금지",
+          "example": ""
+        },
+        {
+          "name": "mime_type",
+          "logical_name_ko": "MIME 유형",
+          "dtype": "string",
+          "nullable": true,
+          "description": "파일 MIME.",
+          "rule": "",
+          "example": "application/pdf"
+        },
+        {
+          "name": "file_size_bytes",
+          "logical_name_ko": "파일 크기",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "파일 크기 bytes.",
+          "rule": "0 이상",
+          "example": "1213379"
+        },
+        {
+          "name": "sha256",
+          "logical_name_ko": "SHA-256",
+          "dtype": "string",
+          "nullable": true,
+          "description": "바이너리 무결성 해시.",
+          "rule": "64자리 hex",
+          "example": ""
+        },
+        {
+          "name": "page_count",
+          "logical_name_ko": "페이지 수",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "PDF 물리 페이지 수.",
+          "rule": "PDF 외 null",
+          "example": "172"
+        },
+        {
+          "name": "collected_at",
+          "logical_name_ko": "수집 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": true,
+          "description": "수집 또는 등록 시각.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "access_scope",
+          "logical_name_ko": "접근 범위",
+          "dtype": "category",
+          "nullable": false,
+          "description": "공개 범위.",
+          "rule": "public|internal|restricted",
+          "example": "public"
+        },
+        {
+          "name": "license_note",
+          "logical_name_ko": "라이선스 메모",
+          "dtype": "string",
+          "nullable": true,
+          "description": "재사용·표시 조건.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "등록 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "등록 실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "document_type/source_year",
+      "note": ""
+    },
+    {
+      "layer": "L0_governance",
+      "name": "data_quality_metrics",
+      "logical_name_ko": "데이터 품질 지표",
+      "grain": "실행 × 엔터티 × 품질지표 1개",
+      "primary_key": [
+        "quality_metric_id"
+      ],
+      "columns": [
+        {
+          "name": "quality_metric_id",
+          "logical_name_ko": "품질 지표 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "품질 행 식별자.",
+          "rule": "DQ_{run}_{seq}",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "entity_name",
+          "logical_name_ko": "엔터티명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검사 대상 엔터티명.",
+          "rule": "",
+          "example": "retrieval_segments"
+        },
+        {
+          "name": "entity_scope_id",
+          "logical_name_ko": "대상 범위 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "meeting_id·projection_id 등 부분 범위.",
+          "rule": "전체는 null",
+          "example": ""
+        },
+        {
+          "name": "metric_name",
+          "logical_name_ko": "지표명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "기계 판독 지표명.",
+          "rule": "snake_case",
+          "example": "traceability_rate"
+        },
+        {
+          "name": "metric_value",
+          "logical_name_ko": "측정값",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "수치형 측정값.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "metric_text",
+          "logical_name_ko": "측정 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "텍스트형 결과.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "expected_value",
+          "logical_name_ko": "기대값",
+          "dtype": "string",
+          "nullable": true,
+          "description": "직렬화한 기대값.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "threshold",
+          "logical_name_ko": "임계값",
+          "dtype": "string",
+          "nullable": true,
+          "description": "PASS/WARN 기준.",
+          "rule": "",
+          "example": ">=1.0"
+        },
+        {
+          "name": "quality_status",
+          "logical_name_ko": "품질 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "판정.",
+          "rule": "PASS|WARN|FAIL|NOT_MEASURED|SKIPPED",
+          "example": "PASS"
+        },
+        {
+          "name": "severity",
+          "logical_name_ko": "심각도",
+          "dtype": "category",
+          "nullable": false,
+          "description": "중요도.",
+          "rule": "info|low|medium|high|critical",
+          "example": "high"
+        },
+        {
+          "name": "detail",
+          "logical_name_ko": "상세 설명",
+          "dtype": "string",
+          "nullable": true,
+          "description": "판정 근거.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "sample_count",
+          "logical_name_ko": "표본 수",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "검사 또는 오류 표본 수.",
+          "rule": "",
+          "example": "65590"
+        },
+        {
+          "name": "sample_path",
+          "logical_name_ko": "표본 파일 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "상세 표본 산출물.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "pipeline_run_id/entity_name",
+      "note": ""
+    },
+    {
+      "layer": "L0_governance",
+      "name": "data_anomalies",
+      "logical_name_ko": "데이터 이상 항목",
+      "grain": "검출된 이상 사례 1개",
+      "primary_key": [
+        "anomaly_id"
+      ],
+      "columns": [
+        {
+          "name": "anomaly_id",
+          "logical_name_ko": "이상 항목 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "이상 사례 식별자.",
+          "rule": "ANOM_{run}_{seq}",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "entity_name",
+          "logical_name_ko": "엔터티명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "대상 엔터티.",
+          "rule": "",
+          "example": "speaker_turns"
+        },
+        {
+          "name": "entity_id",
+          "logical_name_ko": "엔터티 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "문제 행 PK.",
+          "rule": "",
+          "example": "051381_T00005"
+        },
+        {
+          "name": "anomaly_type",
+          "logical_name_ko": "이상 유형",
+          "dtype": "string",
+          "nullable": false,
+          "description": "이상 유형 코드.",
+          "rule": "snake_case",
+          "example": "spacing_collapse"
+        },
+        {
+          "name": "severity",
+          "logical_name_ko": "심각도",
+          "dtype": "category",
+          "nullable": false,
+          "description": "심각도.",
+          "rule": "info|low|medium|high|critical",
+          "example": "medium"
+        },
+        {
+          "name": "detail",
+          "logical_name_ko": "상세 내용",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원인·상태.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "text_preview",
+          "logical_name_ko": "텍스트 미리보기",
+          "dtype": "string",
+          "nullable": true,
+          "description": "최대 500자 미리보기.",
+          "rule": "원문 전체 저장 금지",
+          "example": ""
+        },
+        {
+          "name": "source_path",
+          "logical_name_ko": "원천 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "원천 파일 또는 산출물.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "detected_at",
+          "logical_name_ko": "검출 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "검출 UTC.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "resolution_status",
+          "logical_name_ko": "해결 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "조치 상태.",
+          "rule": "open|accepted|fixed|false_positive|wont_fix",
+          "example": "open"
+        },
+        {
+          "name": "resolution_note",
+          "logical_name_ko": "해결 메모",
+          "dtype": "string",
+          "nullable": true,
+          "description": "수정·판정 내용.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "pipeline_run_id/entity_name",
+      "note": ""
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "meeting_registry",
+      "logical_name_ko": "회의 등록부",
+      "grain": "회의록 PDF 1건",
+      "primary_key": [
+        "meeting_id"
+      ],
+      "columns": [
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원본 회의 식별자.",
+          "rule": "숫자 변환 금지",
+          "example": "024858"
+        },
+        {
+          "name": "meeting_number",
+          "logical_name_ko": "국회 대수",
+          "dtype": "string",
+          "nullable": false,
+          "description": "대수 숫자부.",
+          "rule": "문자열 유지",
+          "example": "21"
+        },
+        {
+          "name": "meeting_count",
+          "logical_name_ko": "회기",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회기 숫자부.",
+          "rule": "문자열 유지",
+          "example": "382"
+        },
+        {
+          "name": "meeting_year",
+          "logical_name_ko": "회의 연도 코드",
+          "dtype": "string",
+          "nullable": false,
+          "description": "연도 마지막 두 자리.",
+          "rule": "문자열 유지",
+          "example": "20"
+        },
+        {
+          "name": "meeting_date",
+          "logical_name_ko": "회의 날짜 코드",
+          "dtype": "string",
+          "nullable": false,
+          "description": "MMDD.",
+          "rule": "문자열 유지",
+          "example": "1007"
+        },
+        {
+          "name": "meeting_date_iso",
+          "logical_name_ko": "회의 날짜",
+          "dtype": "date32",
+          "nullable": true,
+          "description": "ISO 날짜.",
+          "rule": "가능하면 파생",
+          "example": "2020-10-07"
+        },
+        {
+          "name": "audit_cycle",
+          "logical_name_ko": "감사 주기",
+          "dtype": "string",
+          "nullable": true,
+          "description": "내부 temporal cycle.",
+          "rule": "",
+          "example": "AUDIT_2020"
+        },
+        {
+          "name": "meeting_type",
+          "logical_name_ko": "회의 유형",
+          "dtype": "string",
+          "nullable": true,
+          "description": "원본 회의종류.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "committee_code",
+          "logical_name_ko": "위원회 코드",
+          "dtype": "string",
+          "nullable": true,
+          "description": "원본 위원회코드.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "committee_name",
+          "logical_name_ko": "위원회명",
+          "dtype": "string",
+          "nullable": true,
+          "description": "원본 위원회명.",
+          "rule": "",
+          "example": "문화체육관광위원회"
+        },
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "회의록 PDF 원천 문서 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_url",
+          "logical_name_ko": "다운로드 URL",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원본 Registry URL.",
+          "rule": "http/https",
+          "example": ""
+        },
+        {
+          "name": "source_row_no",
+          "logical_name_ko": "원본 행 번호",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "원본 Excel 행.",
+          "rule": "1 이상",
+          "example": "2"
+        },
+        {
+          "name": "download_status",
+          "logical_name_ko": "다운로드 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "다운로드 결과.",
+          "rule": "pending|downloaded|failed|invalid_url|invalid_content",
+          "example": "downloaded"
+        },
+        {
+          "name": "http_status",
+          "logical_name_ko": "HTTP 상태",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "최종 HTTP status.",
+          "rule": "",
+          "example": "200"
+        },
+        {
+          "name": "final_url",
+          "logical_name_ko": "최종 URL",
+          "dtype": "string",
+          "nullable": true,
+          "description": "redirect 이후 URL.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "local_pdf_path",
+          "logical_name_ko": "로컬 PDF 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "원본 PDF 저장 경로.",
+          "rule": "",
+          "example": "pdf_raw_data/024858.pdf"
+        },
+        {
+          "name": "file_size",
+          "logical_name_ko": "파일 크기",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "bytes.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "sha256",
+          "logical_name_ko": "PDF 해시",
+          "dtype": "string",
+          "nullable": true,
+          "description": "바이너리 SHA-256.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_count",
+          "logical_name_ko": "PDF 페이지 수",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "실제 페이지 수.",
+          "rule": "0 이상",
+          "example": ""
+        },
+        {
+          "name": "parse_status",
+          "logical_name_ko": "파싱 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "파싱 결과.",
+          "rule": "pending|parsed|parsed_with_ocr|partial|failed",
+          "example": "parsed"
+        },
+        {
+          "name": "parser_name",
+          "logical_name_ko": "파서명",
+          "dtype": "category",
+          "nullable": true,
+          "description": "기본 PyMuPDF.",
+          "rule": "",
+          "example": "PyMuPDF"
+        },
+        {
+          "name": "parser_version",
+          "logical_name_ko": "파서 버전",
+          "dtype": "string",
+          "nullable": true,
+          "description": "실행 파서 버전.",
+          "rule": "",
+          "example": "1.0.1"
+        },
+        {
+          "name": "extracted_char_count",
+          "logical_name_ko": "추출 문자 수",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "선택 본문 문자 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "ocr_page_count",
+          "logical_name_ko": "OCR 페이지 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "OCR 사용 페이지 수.",
+          "rule": "0 이상",
+          "example": "0"
+        },
+        {
+          "name": "error_message",
+          "logical_name_ko": "오류 메시지",
+          "dtype": "string",
+          "nullable": true,
+          "description": "최종 오류.",
+          "rule": "정상은 null",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "source_document_id",
+          "references": "source_documents.source_document_id"
+        }
+      ],
+      "storage": "control_registry.parquet / SQLite: meeting_registry",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": "잠금된 파일명 control_registry.parquet를 유지한다."
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "index_map",
+      "logical_name_ko": "문서 목차 맵",
+      "grain": "PDF 목차 항목 1개",
+      "primary_key": [
+        "index_no"
+      ],
+      "columns": [
+        {
+          "name": "index_no",
+          "logical_name_ko": "목차 항목 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "synthetic index PK.",
+          "rule": "{meeting_id}_I{order:03d}",
+          "example": "N053487_I004"
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_order",
+          "logical_name_ko": "목차 순서",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "문서 내 순서.",
+          "rule": "1-based",
+          "example": "4"
+        },
+        {
+          "name": "index_label_raw",
+          "logical_name_ko": "원본 목차 라벨",
+          "dtype": "string",
+          "nullable": true,
+          "description": "번호·기호 등 원문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_title_raw",
+          "logical_name_ko": "원본 목차 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 제목.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_title_normalized",
+          "logical_name_ko": "정규화 목차 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검색·매핑용.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "toc_page_no",
+          "logical_name_ko": "목차 페이지 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "목차 위치 page_no.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "body_page_start_no",
+          "logical_name_ko": "본문 시작 페이지 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "본문 시작.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "body_page_end_no",
+          "logical_name_ko": "본문 끝 페이지 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "본문 끝.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "mapping_method",
+          "logical_name_ko": "매핑 방법",
+          "dtype": "category",
+          "nullable": false,
+          "description": "매핑 방식.",
+          "rule": "explicit_page|heading_match|range_inference|unmapped",
+          "example": "heading_match"
+        },
+        {
+          "name": "mapping_confidence",
+          "logical_name_ko": "매핑 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "0<=x<=1",
+          "example": "0.94"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        }
+      ],
+      "storage": "index_map.parquet / SQLite: index_map",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "pages",
+      "logical_name_ko": "문서 페이지",
+      "grain": "PDF 물리 페이지 1개",
+      "primary_key": [
+        "page_no"
+      ],
+      "columns": [
+        {
+          "name": "page_no",
+          "logical_name_ko": "페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "물리 페이지 PK.",
+          "rule": "{meeting_id}_{pdf_page_seq:04d}",
+          "example": "N053487_0043"
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pdf_page_seq",
+          "logical_name_ko": "PDF 페이지 순번",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "1-based 물리 페이지.",
+          "rule": "1 이상",
+          "example": "43"
+        },
+        {
+          "name": "printed_page_no",
+          "logical_name_ko": "인쇄 페이지 번호",
+          "dtype": "string",
+          "nullable": true,
+          "description": "문서에 인쇄된 번호.",
+          "rule": "",
+          "example": "41"
+        },
+        {
+          "name": "index_no",
+          "logical_name_ko": "목차 항목 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "목차 FK.",
+          "rule": "매핑 불가면 null",
+          "example": ""
+        },
+        {
+          "name": "native_raw_text",
+          "logical_name_ko": "네이티브 원문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PyMuPDF 원문.",
+          "rule": "수정 금지",
+          "example": ""
+        },
+        {
+          "name": "ocr_raw_text",
+          "logical_name_ko": "OCR 원문",
+          "dtype": "string",
+          "nullable": true,
+          "description": "OCR 결과.",
+          "rule": "OCR 미실행은 null",
+          "example": ""
+        },
+        {
+          "name": "raw_text",
+          "logical_name_ko": "선택 원문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "최종 선택 원문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "normalized_text",
+          "logical_name_ko": "정규화 본문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검색·결합용.",
+          "rule": "raw 덮어쓰기 금지",
+          "example": ""
+        },
+        {
+          "name": "native_char_count",
+          "logical_name_ko": "네이티브 문자 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "native 길이.",
+          "rule": "0 이상",
+          "example": ""
+        },
+        {
+          "name": "selected_char_count",
+          "logical_name_ko": "선택 문자 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "raw_text 길이.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "hangul_ratio",
+          "logical_name_ko": "한글 비율",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "replacement_char_ratio",
+          "logical_name_ko": "대체문자 비율",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "image_area_ratio",
+          "logical_name_ko": "이미지 면적 비율",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "text_layer_present",
+          "logical_name_ko": "텍스트 레이어 존재",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "native text layer 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "ocr_required",
+          "logical_name_ko": "OCR 필요",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "품질 규칙상 OCR 후보.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "ocr_used",
+          "logical_name_ko": "OCR 사용",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "최종 원문에 OCR 사용.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "extraction_method",
+          "logical_name_ko": "추출 방식",
+          "dtype": "category",
+          "nullable": false,
+          "description": "최종 방식.",
+          "rule": "native|ocr|native_plus_ocr",
+          "example": "native"
+        },
+        {
+          "name": "quality_score",
+          "logical_name_ko": "페이지 품질 점수",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.98"
+        },
+        {
+          "name": "error_message",
+          "logical_name_ko": "오류 메시지",
+          "dtype": "string",
+          "nullable": true,
+          "description": "페이지 오류.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "index_no",
+          "references": "index_map.index_no"
+        }
+      ],
+      "storage": "pages.parquet / SQLite: pages",
+      "required_level": "required",
+      "partitioning": "meeting_id",
+      "note": ""
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "blocks",
+      "logical_name_ko": "텍스트 블록",
+      "grain": "페이지 × 물리 블록 1개",
+      "primary_key": [
+        "block_no"
+      ],
+      "columns": [
+        {
+          "name": "block_no",
+          "logical_name_ko": "블록 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "블록 PK.",
+          "rule": "{page_no}_{block_seq:04d}",
+          "example": "N053487_0043_0007"
+        },
+        {
+          "name": "page_no",
+          "logical_name_ko": "페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "페이지 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_no",
+          "logical_name_ko": "목차 항목 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "목차 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "block_seq",
+          "logical_name_ko": "블록 순번",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "페이지 내 순서.",
+          "rule": "1-based",
+          "example": "7"
+        },
+        {
+          "name": "x0",
+          "logical_name_ko": "좌측 좌표",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "bbox x0.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "y0",
+          "logical_name_ko": "상단 좌표",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "bbox y0.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "x1",
+          "logical_name_ko": "우측 좌표",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "bbox x1.",
+          "rule": "x1>=x0",
+          "example": ""
+        },
+        {
+          "name": "y1",
+          "logical_name_ko": "하단 좌표",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "bbox y1.",
+          "rule": "y1>=y0",
+          "example": ""
+        },
+        {
+          "name": "source_block_kind",
+          "logical_name_ko": "원천 블록 종류",
+          "dtype": "category",
+          "nullable": false,
+          "description": "파서 block 종류.",
+          "rule": "TEXT|IMAGE",
+          "example": "TEXT"
+        },
+        {
+          "name": "block_text",
+          "logical_name_ko": "블록 원문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "파서/OCR 원문.",
+          "rule": "수정 금지",
+          "example": ""
+        },
+        {
+          "name": "normalized_text",
+          "logical_name_ko": "정규화 블록 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구조·검색용.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "block_type",
+          "logical_name_ko": "블록 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "구조 분류.",
+          "rule": "EMPTY|PAGE_HEADER|PAGE_FOOTER|TIME_MARKER|AGENDA_HEADER|INDEX_ENTRY|SPEAKER_HEADER|PROCEDURAL_TEXT|BODY_TEXT|UNKNOWN",
+          "example": "BODY_TEXT"
+        },
+        {
+          "name": "classification_rule",
+          "logical_name_ko": "분류 규칙",
+          "dtype": "string",
+          "nullable": true,
+          "description": "적용 규칙 ID.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "classification_confidence",
+          "logical_name_ko": "분류 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "turn_no",
+          "logical_name_ko": "발언턴 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "부모 turn FK.",
+          "rule": "지면 가구는 null 가능",
+          "example": ""
+        },
+        {
+          "name": "is_orphan",
+          "logical_name_ko": "고아 블록 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "정상 turn 배정 실패.",
+          "rule": "",
+          "example": "false"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "page_no",
+          "references": "pages.page_no"
+        },
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "index_no",
+          "references": "index_map.index_no"
+        },
+        {
+          "column": "turn_no",
+          "references": "speaker_turns.turn_no"
+        }
+      ],
+      "storage": "blocks.parquet / SQLite: blocks",
+      "required_level": "required",
+      "partitioning": "meeting_id/page_no",
+      "note": ""
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "speaker_turns",
+      "logical_name_ko": "발언 턴",
+      "grain": "한 발언자의 연속 발언 또는 독립 절차문 1개",
+      "primary_key": [
+        "turn_no"
+      ],
+      "columns": [
+        {
+          "name": "turn_no",
+          "logical_name_ko": "발언턴 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "turn PK.",
+          "rule": "{meeting_id}_T{seq:05d}",
+          "example": "N053487_T00128"
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_no",
+          "logical_name_ko": "목차 항목 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "목차 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "turn_seq",
+          "logical_name_ko": "발언턴 순번",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "회의 내 순서.",
+          "rule": "1-based",
+          "example": "128"
+        },
+        {
+          "name": "turn_type",
+          "logical_name_ko": "발언턴 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "의미 유형.",
+          "rule": "speaker|procedural|orphan",
+          "example": "speaker"
+        },
+        {
+          "name": "speaker_raw",
+          "logical_name_ko": "원본 화자 헤더",
+          "dtype": "string",
+          "nullable": true,
+          "description": "첫 SPEAKER_HEADER 원문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "speaker_name",
+          "logical_name_ko": "화자명",
+          "dtype": "string",
+          "nullable": true,
+          "description": "파싱된 이름.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "speaker_role",
+          "logical_name_ko": "화자 역할",
+          "dtype": "string",
+          "nullable": true,
+          "description": "위원·장관·기관장 등.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "speaker_org",
+          "logical_name_ko": "화자 기관",
+          "dtype": "string",
+          "nullable": true,
+          "description": "소속 기관.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "speaker_parse_confidence",
+          "logical_name_ko": "화자 파싱 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "agenda_text",
+          "logical_name_ko": "안건 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "전파된 안건.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "time_marker",
+          "logical_name_ko": "시간 표지",
+          "dtype": "string",
+          "nullable": true,
+          "description": "감사개시·중지 등.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_start_no",
+          "logical_name_ko": "시작 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "첫 자식 블록 페이지.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_end_no",
+          "logical_name_ko": "끝 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "마지막 자식 블록 페이지.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "block_start_no",
+          "logical_name_ko": "시작 블록 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "첫 자식 블록.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "block_end_no",
+          "logical_name_ko": "끝 블록 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "마지막 자식 블록.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "raw_text",
+          "logical_name_ko": "발언 원문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "지면 가구 제외 결합 원문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "normalized_text",
+          "logical_name_ko": "정규화 발언",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검색용 정규화.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "char_count",
+          "logical_name_ko": "문자 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "normalized_text 길이.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "sentence_count",
+          "logical_name_ko": "문장 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "후처리 문장 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "n_blocks",
+          "logical_name_ko": "자식 블록 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "turn_no 부여 자식 블록 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "is_orphan",
+          "logical_name_ko": "고아 턴 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "구조상 고아 여부.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "parse_confidence",
+          "logical_name_ko": "턴 파싱 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "index_no",
+          "references": "index_map.index_no"
+        },
+        {
+          "column": "page_start_no",
+          "references": "pages.page_no"
+        },
+        {
+          "column": "page_end_no",
+          "references": "pages.page_no"
+        },
+        {
+          "column": "block_start_no",
+          "references": "blocks.block_no"
+        },
+        {
+          "column": "block_end_no",
+          "references": "blocks.block_no"
+        }
+      ],
+      "storage": "speaker_turns.parquet / SQLite: speaker_turns",
+      "required_level": "required",
+      "partitioning": "meeting_id",
+      "note": ""
+    },
+    {
+      "layer": "L1_canonical",
+      "name": "retrieval_segments",
+      "logical_name_ko": "검색 세그먼트",
+      "grain": "anchor turn 기준 검색 window 1개",
+      "primary_key": [
+        "segment_no"
+      ],
+      "columns": [
+        {
+          "name": "segment_no",
+          "logical_name_ko": "세그먼트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "segment PK.",
+          "rule": "{meeting_id}_{type}_{anchor_seq:05d}",
+          "example": "N053487_SEG_PREV_CURR_00128"
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "index_no",
+          "logical_name_ko": "목차 항목 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "목차 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "segment_type",
+          "logical_name_ko": "세그먼트 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "검색 window.",
+          "rule": "SEG_TURN|SEG_PREV_CURR|SEG_CURR_NEXT",
+          "example": "SEG_PREV_CURR"
+        },
+        {
+          "name": "anchor_turn_no",
+          "logical_name_ko": "기준 발언턴 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "anchor FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "turn_start_no",
+          "logical_name_ko": "시작 발언턴 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구성 첫 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "turn_end_no",
+          "logical_name_ko": "끝 발언턴 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구성 마지막 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "prev_turn_no",
+          "logical_name_ko": "이전 발언턴 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "이전 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "next_turn_no",
+          "logical_name_ko": "다음 발언턴 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "다음 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_start_no",
+          "logical_name_ko": "시작 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 시작 페이지.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_end_no",
+          "logical_name_ko": "끝 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 끝 페이지.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "speaker_names",
+          "logical_name_ko": "화자명 목록 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "표시용 구분 문자열.",
+          "rule": "관계는 turn FK 사용",
+          "example": ""
+        },
+        {
+          "name": "speaker_roles",
+          "logical_name_ko": "화자 역할 목록 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "표시용.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "raw_text",
+          "logical_name_ko": "세그먼트 원문",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구성 turn 원문 결합.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "normalized_text",
+          "logical_name_ko": "정규화 세그먼트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검색 입력.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "char_count",
+          "logical_name_ko": "문자 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "normalized 길이.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "sentence_count",
+          "logical_name_ko": "문장 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "문장 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "segment_hash",
+          "logical_name_ko": "세그먼트 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "내용·구성 무결성 해시.",
+          "rule": "SHA-256 권장",
+          "example": ""
+        },
+        {
+          "name": "tfidf_ready",
+          "logical_name_ko": "TF-IDF 준비 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "검색 기본조건 충족.",
+          "rule": "",
+          "example": "true"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "index_no",
+          "references": "index_map.index_no"
+        },
+        {
+          "column": "anchor_turn_no",
+          "references": "speaker_turns.turn_no"
+        },
+        {
+          "column": "turn_start_no",
+          "references": "speaker_turns.turn_no"
+        },
+        {
+          "column": "turn_end_no",
+          "references": "speaker_turns.turn_no"
+        },
+        {
+          "column": "prev_turn_no",
+          "references": "speaker_turns.turn_no"
+        },
+        {
+          "column": "next_turn_no",
+          "references": "speaker_turns.turn_no"
+        }
+      ],
+      "storage": "retrieval_segments.parquet / SQLite: retrieval_segments",
+      "required_level": "required",
+      "partitioning": "meeting_id/segment_type",
+      "note": ""
+    },
+    {
+      "layer": "L2_target",
+      "name": "target_issues_raw",
+      "logical_name_ko": "시정 이슈 원시",
+      "grain": "마커 파서 출력 원시 이슈 1개",
+      "primary_key": [
+        "target_raw_id"
+      ],
+      "columns": [
+        {
+          "name": "target_raw_id",
+          "logical_name_ko": "원시 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원시행 PK.",
+          "rule": "RAW_TGT_{year}_{issue}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "처리결과보고서 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_year",
+          "logical_name_ko": "원천 연도",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "보고서 연도.",
+          "rule": "",
+          "example": "2024"
+        },
+        {
+          "name": "issue_no_raw",
+          "logical_name_ko": "원본 이슈 번호",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 번호.",
+          "rule": "",
+          "example": "526"
+        },
+        {
+          "name": "legacy_meeting_id_raw",
+          "logical_name_ko": "레거시 회의 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "기존 CSV placeholder 보존.",
+          "rule": "join key 사용 금지",
+          "example": "UNMAPPED_REPORT_2024"
+        },
+        {
+          "name": "issue_text_raw",
+          "logical_name_ko": "원본 시정요구 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "파싱 원문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "action_text_raw",
+          "logical_name_ko": "원본 조치사항 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "literal null 포함 가능.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "future_plan_text_raw",
+          "logical_name_ko": "원본 향후계획 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "literal null 포함 가능.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "status_raw",
+          "logical_name_ko": "원본 상태",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원시 분류 값.",
+          "rule": "",
+          "example": "complete"
+        },
+        {
+          "name": "source_page_raw",
+          "logical_name_ko": "원본 페이지",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원본 페이지 값.",
+          "rule": "",
+          "example": "32"
+        },
+        {
+          "name": "parse_source",
+          "logical_name_ko": "파싱 출처",
+          "dtype": "category",
+          "nullable": false,
+          "description": "파싱 방식.",
+          "rule": "native|ocr|manual|mixed",
+          "example": "native"
+        },
+        {
+          "name": "action_literal_null",
+          "logical_name_ko": "조치사항 literal null",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "문자열 null 여부.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "future_literal_null",
+          "logical_name_ko": "향후계획 literal null",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "문자열 null 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "marker_count",
+          "logical_name_ko": "연결 마커 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "annotation 수.",
+          "rule": "",
+          "example": "2"
+        },
+        {
+          "name": "source_record_hash",
+          "logical_name_ko": "원시행 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원시 레코드 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "source_document_id",
+          "references": "source_documents.source_document_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "source_year",
+      "note": ""
+    },
+    {
+      "layer": "L2_target",
+      "name": "target_issues",
+      "logical_name_ko": "시정 이슈",
+      "grain": "정규화된 시정 요구 이슈 1개",
+      "primary_key": [
+        "target_issue_id"
+      ],
+      "columns": [
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "정규 PK.",
+          "rule": "TGT_{year}_{issue_no:04d}",
+          "example": "TGT_2024_0526"
+        },
+        {
+          "name": "target_raw_id",
+          "logical_name_ko": "원시 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원시행 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "처리결과보고서 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_year",
+          "logical_name_ko": "원천 연도",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "보고서 연도.",
+          "rule": "UI 비교축이 아닌 lineage",
+          "example": "2024"
+        },
+        {
+          "name": "audit_cycle",
+          "logical_name_ko": "감사 주기",
+          "dtype": "string",
+          "nullable": false,
+          "description": "temporal eligibility cycle.",
+          "rule": "",
+          "example": "AUDIT_2024"
+        },
+        {
+          "name": "cutoff_date",
+          "logical_name_ko": "검색 기준일",
+          "dtype": "date32",
+          "nullable": false,
+          "description": "후보 회의록 상한일.",
+          "rule": "회의일<=cutoff_date",
+          "example": "2024-12-31"
+        },
+        {
+          "name": "issue_no",
+          "logical_name_ko": "이슈 번호",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "보고서 이슈 번호.",
+          "rule": "양의 정수",
+          "example": "526"
+        },
+        {
+          "name": "issue_text",
+          "logical_name_ko": "시정요구 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "핵심 query.",
+          "rule": "빈 문자열 금지",
+          "example": ""
+        },
+        {
+          "name": "action_text",
+          "logical_name_ko": "조치사항 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "정규 조치사항.",
+          "rule": "없음·미확인은 null",
+          "example": ""
+        },
+        {
+          "name": "future_plan_text",
+          "logical_name_ko": "향후계획 텍스트",
+          "dtype": "string",
+          "nullable": true,
+          "description": "정규 향후계획.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "action_text_state",
+          "logical_name_ko": "조치사항 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "텍스트 가용상태.",
+          "rule": "present|not_present|unresolved",
+          "example": "present"
+        },
+        {
+          "name": "future_plan_text_state",
+          "logical_name_ko": "향후계획 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "텍스트 가용상태.",
+          "rule": "present|not_present|unresolved",
+          "example": "not_present"
+        },
+        {
+          "name": "status_original",
+          "logical_name_ko": "원본 처리상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "보고서 기반 상태.",
+          "rule": "complete|active|uncomplete|null",
+          "example": "complete"
+        },
+        {
+          "name": "status_canvas",
+          "logical_name_ko": "화면 처리상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "시각화 3상태.",
+          "rule": "complete|active|unresolved",
+          "example": "complete"
+        },
+        {
+          "name": "status_source",
+          "logical_name_ko": "상태 판정 출처",
+          "dtype": "category",
+          "nullable": false,
+          "description": "상태 근거.",
+          "rule": "explicit_native|explicit_ocr|fallback_rule|manual|unresolved",
+          "example": "explicit_native"
+        },
+        {
+          "name": "source_page",
+          "logical_name_ko": "보고서 페이지",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "물리 PDF 페이지.",
+          "rule": "1 이상",
+          "example": "32"
+        },
+        {
+          "name": "parse_source",
+          "logical_name_ko": "파싱 출처",
+          "dtype": "category",
+          "nullable": false,
+          "description": "행 파싱 출처.",
+          "rule": "native|ocr|manual|mixed",
+          "example": "native"
+        },
+        {
+          "name": "issue_text_hash",
+          "logical_name_ko": "이슈 텍스트 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "정규 텍스트 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "review_status",
+          "logical_name_ko": "검수 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "인간 검수 상태.",
+          "rule": "unreviewed|reviewed|needs_fix|approved",
+          "example": "approved"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_raw_id",
+          "references": "target_issues_raw.target_raw_id"
+        },
+        {
+          "column": "source_document_id",
+          "references": "source_documents.source_document_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "target_issues.parquet / review CSV",
+      "required_level": "required",
+      "partitioning": "source_year/status_canvas",
+      "note": "Canonical은 actual null + *_text_state를 사용한다."
+    },
+    {
+      "layer": "L2_target",
+      "name": "target_issue_sources",
+      "logical_name_ko": "시정 이슈 마커 출처",
+      "grain": "시정 이슈 × annotation·위치 1개",
+      "primary_key": [
+        "target_source_id"
+      ],
+      "columns": [
+        {
+          "name": "target_source_id",
+          "logical_name_ko": "마커 출처 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "TSRC_{target}_{seq}",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "문서 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_page",
+          "logical_name_ko": "원천 페이지",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "annotation 페이지.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "annotation_xref",
+          "logical_name_ko": "PDF annotation xref",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "PDF 내부 xref.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "annotation_type",
+          "logical_name_ko": "annotation 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "마커 유형.",
+          "rule": "highlight|underline|manual_selection",
+          "example": "highlight"
+        },
+        {
+          "name": "marker_color",
+          "logical_name_ko": "마커 색",
+          "dtype": "string",
+          "nullable": true,
+          "description": "정규화 RGB/hex.",
+          "rule": "",
+          "example": "#FF6200"
+        },
+        {
+          "name": "bbox_x0",
+          "logical_name_ko": "bbox x0",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "annotation bbox.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bbox_y0",
+          "logical_name_ko": "bbox y0",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "annotation bbox.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bbox_x1",
+          "logical_name_ko": "bbox x1",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "annotation bbox.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bbox_y1",
+          "logical_name_ko": "bbox y1",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "annotation bbox.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "mapping_scope",
+          "logical_name_ko": "매핑 범위",
+          "dtype": "category",
+          "nullable": false,
+          "description": "TOC/본문 매핑.",
+          "rule": "toc|body|both|manual",
+          "example": "both"
+        },
+        {
+          "name": "mapping_confidence",
+          "logical_name_ko": "매핑 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "1.0"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "source_document_id",
+          "references": "source_documents.source_document_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L2_target",
+      "name": "target_search_scopes",
+      "logical_name_ko": "이슈 검색 범위",
+      "grain": "시정 이슈별 시간 적격성 검색범위 1개",
+      "primary_key": [
+        "target_issue_id"
+      ],
+      "columns": [
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target PK/FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "temporal_policy",
+          "logical_name_ko": "시간 정책",
+          "dtype": "category",
+          "nullable": false,
+          "description": "eligibility 정책.",
+          "rule": "strict_audit_cycle|cutoff_only|manual_scope",
+          "example": "strict_audit_cycle"
+        },
+        {
+          "name": "audit_cycle",
+          "logical_name_ko": "감사 주기",
+          "dtype": "string",
+          "nullable": false,
+          "description": "허용 주기.",
+          "rule": "",
+          "example": "AUDIT_2024"
+        },
+        {
+          "name": "cutoff_date",
+          "logical_name_ko": "검색 상한일",
+          "dtype": "date32",
+          "nullable": false,
+          "description": "미래 회의록 차단 기준.",
+          "rule": "",
+          "example": "2024-12-31"
+        },
+        {
+          "name": "eligible_meeting_count",
+          "logical_name_ko": "적격 회의 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "검색 대상 회의 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "eligible_segment_count",
+          "logical_name_ko": "적격 세그먼트 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "검색 행 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "excluded_future_segment_count",
+          "logical_name_ko": "미래 제외 세그먼트 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "cutoff 이후 제외.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "excluded_other_cycle_count",
+          "logical_name_ko": "타주기 제외 세그먼트 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "다른 감사주기 제외.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "eligibility_hash",
+          "logical_name_ko": "검색 범위 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "meeting/segment 집합 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": "target×segment 전체 eligibility 행렬은 저장하지 않는다."
+    },
+    {
+      "layer": "L2_retrieval",
+      "name": "target_segment_candidates",
+      "logical_name_ko": "시정 이슈–세그먼트 후보",
+      "grain": "시정 이슈 × 검색 후보 세그먼트 1개",
+      "primary_key": [
+        "candidate_id"
+      ],
+      "columns": [
+        {
+          "name": "candidate_id",
+          "logical_name_ko": "후보 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "CAND_{target}_{segment_hash8}",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "segment_no",
+          "logical_name_ko": "세그먼트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "segment FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "query_variant",
+          "logical_name_ko": "검색 질의 버전",
+          "dtype": "category",
+          "nullable": false,
+          "description": "query 구성.",
+          "rule": "core|expanded|debug_full",
+          "example": "core"
+        },
+        {
+          "name": "temporal_eligible",
+          "logical_name_ko": "시간 적격 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "저장 후보는 반드시 true.",
+          "rule": "false 저장 금지",
+          "example": "true"
+        },
+        {
+          "name": "char_score",
+          "logical_name_ko": "문자 TF-IDF 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "0~1 cosine.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "char_rank",
+          "logical_name_ko": "문자 TF-IDF 순위",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "target 내 순위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "word_score",
+          "logical_name_ko": "단어 TF-IDF 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "0~1 cosine.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "word_rank",
+          "logical_name_ko": "단어 TF-IDF 순위",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "target 내 순위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "dense_score",
+          "logical_name_ko": "Dense 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "L2 normalized cosine.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "dense_rank",
+          "logical_name_ko": "Dense 순위",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "target 내 순위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "rrf_score",
+          "logical_name_ko": "RRF 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "rank fusion 점수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "final_rank",
+          "logical_name_ko": "최종 순위",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "target 내 최종 순위.",
+          "rule": "1 이상",
+          "example": "1"
+        },
+        {
+          "name": "candidate_sources",
+          "logical_name_ko": "후보 생성 출처",
+          "dtype": "string",
+          "nullable": false,
+          "description": "char|word|dense 조합.",
+          "rule": "",
+          "example": "char|word"
+        },
+        {
+          "name": "candidate_text_hash",
+          "logical_name_ko": "후보 텍스트 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "검색 당시 segment hash.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "segment_no",
+          "references": "retrieval_segments.segment_no"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "source_year/query_variant",
+      "note": "Unique: target_issue_id+segment_no+query_variant+pipeline_run_id"
+    },
+    {
+      "layer": "L2_retrieval",
+      "name": "target_segment_qrels",
+      "logical_name_ko": "시정 이슈–세그먼트 관련도 정답",
+      "grain": "시정 이슈 × 후보 × 검수 라운드 1개",
+      "primary_key": [
+        "qrel_id"
+      ],
+      "columns": [
+        {
+          "name": "qrel_id",
+          "logical_name_ko": "관련도 라벨 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "QREL_{target}_{segment_hash8}_R{round}",
+          "example": ""
+        },
+        {
+          "name": "candidate_id",
+          "logical_name_ko": "후보 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "candidate FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "segment_no",
+          "logical_name_ko": "세그먼트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "segment FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "relevance_label",
+          "logical_name_ko": "관련도 라벨",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "0 무관, 1 보조, 2 핵심 Q/A.",
+          "rule": "0|1|2",
+          "example": "2"
+        },
+        {
+          "name": "label_confidence",
+          "logical_name_ko": "라벨 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.95"
+        },
+        {
+          "name": "review_status",
+          "logical_name_ko": "검수 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "검수 상태.",
+          "rule": "unreviewed|reviewed|disputed|adjudicated",
+          "example": "reviewed"
+        },
+        {
+          "name": "review_round",
+          "logical_name_ko": "검수 라운드",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "1 이상.",
+          "rule": "",
+          "example": "1"
+        },
+        {
+          "name": "reviewer_id",
+          "logical_name_ko": "검수자 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "가명 검수자 ID.",
+          "rule": "개인정보 금지",
+          "example": "REV_A"
+        },
+        {
+          "name": "adjudicator_id",
+          "logical_name_ko": "조정자 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "분쟁 조정자.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "rationale",
+          "logical_name_ko": "판정 근거",
+          "dtype": "string",
+          "nullable": true,
+          "description": "짧은 근거.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "guideline_version",
+          "logical_name_ko": "가이드라인 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "qrels guideline.",
+          "rule": "",
+          "example": "1.0.0"
+        },
+        {
+          "name": "labeled_at",
+          "logical_name_ko": "라벨 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "candidate_id",
+          "references": "target_segment_candidates.candidate_id"
+        },
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "segment_no",
+          "references": "retrieval_segments.segment_no"
+        }
+      ],
+      "storage": "target_segment_qrels.parquet + review CSV",
+      "required_level": "required",
+      "partitioning": "review_round/review_status",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "qa_pairs",
+      "logical_name_ko": "질의응답 쌍",
+      "grain": "검증된 질의 span × 답변 span 1개",
+      "primary_key": [
+        "qa_pair_id"
+      ],
+      "columns": [
+        {
+          "name": "qa_pair_id",
+          "logical_name_ko": "질의응답 쌍 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "QA_{meeting}_{seq:06d}",
+          "example": "QA_051535_000386"
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "회의 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "qa_pair_type",
+          "logical_name_ko": "질의응답 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "span 구조.",
+          "rule": "question_answer|question_multi_answer|multi_question_answer|multi_question_multi_answer",
+          "example": "question_answer"
+        },
+        {
+          "name": "question_turn_start_no",
+          "logical_name_ko": "질문 시작 턴",
+          "dtype": "string",
+          "nullable": false,
+          "description": "질문 첫 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "question_turn_end_no",
+          "logical_name_ko": "질문 끝 턴",
+          "dtype": "string",
+          "nullable": false,
+          "description": "질문 마지막 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_turn_start_no",
+          "logical_name_ko": "답변 시작 턴",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 첫 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_turn_end_no",
+          "logical_name_ko": "답변 끝 턴",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 마지막 turn.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "question_text",
+          "logical_name_ko": "질문 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "질문 span 결합.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_text",
+          "logical_name_ko": "답변 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 span 결합.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "question_speaker_name",
+          "logical_name_ko": "질문자명",
+          "dtype": "string",
+          "nullable": true,
+          "description": "대표 질문자.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "question_speaker_role",
+          "logical_name_ko": "질문자 역할",
+          "dtype": "string",
+          "nullable": true,
+          "description": "위원 등.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_speaker_name",
+          "logical_name_ko": "답변자명",
+          "dtype": "string",
+          "nullable": true,
+          "description": "대표 답변자.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_speaker_role",
+          "logical_name_ko": "답변자 역할",
+          "dtype": "string",
+          "nullable": true,
+          "description": "장관·기관장 등.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_speaker_org",
+          "logical_name_ko": "답변자 기관",
+          "dtype": "string",
+          "nullable": true,
+          "description": "소속 기관.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_start_no",
+          "logical_name_ko": "시작 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "Q/A 전체 시작.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_end_no",
+          "logical_name_ko": "끝 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "Q/A 전체 끝.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "qa_confidence",
+          "logical_name_ko": "Q/A 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.93"
+        },
+        {
+          "name": "resolution_method",
+          "logical_name_ko": "복원 방법",
+          "dtype": "category",
+          "nullable": false,
+          "description": "복원 방식.",
+          "rule": "rule|manual|hybrid|model",
+          "example": "rule"
+        },
+        {
+          "name": "review_status",
+          "logical_name_ko": "검수 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "검수 상태.",
+          "rule": "unreviewed|reviewed|needs_fix|approved",
+          "example": "approved"
+        },
+        {
+          "name": "annotation_version",
+          "logical_name_ko": "Q/A 가이드 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "Q/A 규칙 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "meeting_id",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "qa_pair_turns",
+      "logical_name_ko": "질의응답 구성 발언턴",
+      "grain": "질의응답 쌍 × 구성 turn 1개",
+      "primary_key": [
+        "qa_pair_id",
+        "turn_no"
+      ],
+      "columns": [
+        {
+          "name": "qa_pair_id",
+          "logical_name_ko": "질의응답 쌍 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "qa FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "turn_no",
+          "logical_name_ko": "발언턴 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "turn FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "turn_role",
+          "logical_name_ko": "Q/A 내 역할",
+          "dtype": "category",
+          "nullable": false,
+          "description": "구성 역할.",
+          "rule": "question|answer|context|procedural",
+          "example": "answer"
+        },
+        {
+          "name": "turn_order",
+          "logical_name_ko": "구성 순서",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "Q/A 내 순서.",
+          "rule": "1-based",
+          "example": "2"
+        },
+        {
+          "name": "included_in_question_text",
+          "logical_name_ko": "질문 본문 포함",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "question_text 포함.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "included_in_answer_text",
+          "logical_name_ko": "답변 본문 포함",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "answer_text 포함.",
+          "rule": "",
+          "example": "true"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "qa_pair_id",
+          "references": "qa_pairs.qa_pair_id"
+        },
+        {
+          "column": "turn_no",
+          "references": "speaker_turns.turn_no"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "answer_behavior_labels",
+      "logical_name_ko": "답변행태 라벨",
+      "grain": "고유 답변 span 1개",
+      "primary_key": [
+        "answer_label_id"
+      ],
+      "columns": [
+        {
+          "name": "answer_label_id",
+          "logical_name_ko": "답변행태 라벨 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "ALBL_{answer_hash8}_{version}",
+          "example": ""
+        },
+        {
+          "name": "answer_turn_key",
+          "logical_name_ko": "답변턴 키",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 span 고유키.",
+          "rule": "ANS_{start_turn}_{end_turn}",
+          "example": ""
+        },
+        {
+          "name": "answer_span_hash",
+          "logical_name_ko": "답변 span 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 텍스트·turn 집합 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "memory_lapse",
+          "logical_name_ko": "A1 기억 부재",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "0<=x<=1",
+          "example": "0"
+        },
+        {
+          "name": "information_unavailable",
+          "logical_name_ko": "A2 정보 미보유",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "1"
+        },
+        {
+          "name": "responsibility_shift",
+          "logical_name_ko": "A3 타주체 귀속",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "indirect_response",
+          "logical_name_ko": "A4 비직접 대응",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "review_deferral",
+          "logical_name_ko": "A5 검토·협의 유보",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "1"
+        },
+        {
+          "name": "procedural_followup",
+          "logical_name_ko": "A6 조사·자료 제출",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "concrete_commitment",
+          "logical_name_ko": "A7 구체 조치 약속",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "completed_with_evidence",
+          "logical_name_ko": "A8 완료·근거 제시",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0/1 또는 확률.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "directness_score",
+          "logical_name_ko": "직접성 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "질문 핵심 대응 정도.",
+          "rule": "0~1",
+          "example": ""
+        },
+        {
+          "name": "specificity_score",
+          "logical_name_ko": "구체성 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "주체·행위·대상·기한 구체성.",
+          "rule": "0~1",
+          "example": ""
+        },
+        {
+          "name": "commitment_score",
+          "logical_name_ko": "약속 명확성 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "행동 약속 강도.",
+          "rule": "0~1",
+          "example": ""
+        },
+        {
+          "name": "evidence_score",
+          "logical_name_ko": "근거 제시 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "수치·문서·조치 근거.",
+          "rule": "0~1",
+          "example": ""
+        },
+        {
+          "name": "label_source",
+          "logical_name_ko": "라벨 출처",
+          "dtype": "category",
+          "nullable": false,
+          "description": "라벨 생성 방식.",
+          "rule": "manual|weak_rule|model|hybrid",
+          "example": "manual"
+        },
+        {
+          "name": "model_id",
+          "logical_name_ko": "라벨 모델 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "모델 사용 시 식별자.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "guideline_version",
+          "logical_name_ko": "라벨 가이드 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "taxonomy 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        },
+        {
+          "name": "label_confidence",
+          "logical_name_ko": "라벨 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.92"
+        },
+        {
+          "name": "review_status",
+          "logical_name_ko": "검수 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "검수 상태.",
+          "rule": "unreviewed|reviewed|disputed|adjudicated",
+          "example": "reviewed"
+        },
+        {
+          "name": "reviewer_count",
+          "logical_name_ko": "검수자 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "라벨 참여자 수.",
+          "rule": "",
+          "example": "2"
+        },
+        {
+          "name": "labeled_at",
+          "logical_name_ko": "라벨 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "label_source/guideline_version",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "answer_behavior_spans",
+      "logical_name_ko": "답변행태 근거 구간",
+      "grain": "답변행태 라벨 × 원문 근거 span 1개",
+      "primary_key": [
+        "behavior_span_id"
+      ],
+      "columns": [
+        {
+          "name": "behavior_span_id",
+          "logical_name_ko": "근거 구간 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "ASPAN_{label}_{seq}",
+          "example": ""
+        },
+        {
+          "name": "answer_label_id",
+          "logical_name_ko": "답변행태 라벨 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "라벨 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "behavior_code",
+          "logical_name_ko": "답변행태 코드",
+          "dtype": "category",
+          "nullable": false,
+          "description": "A1~A8.",
+          "rule": "A1|A2|A3|A4|A5|A6|A7|A8",
+          "example": "A5"
+        },
+        {
+          "name": "char_start",
+          "logical_name_ko": "문자 시작 위치",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "answer_text 기준 0-based.",
+          "rule": "",
+          "example": "12"
+        },
+        {
+          "name": "char_end",
+          "logical_name_ko": "문자 끝 위치",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "exclusive.",
+          "rule": "char_end>char_start",
+          "example": "24"
+        },
+        {
+          "name": "span_text",
+          "logical_name_ko": "근거 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 부분.",
+          "rule": "answer_text slice와 일치",
+          "example": "관계기관과 협의"
+        },
+        {
+          "name": "span_confidence",
+          "logical_name_ko": "구간 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "reviewer_id",
+          "logical_name_ko": "검수자 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "가명 ID.",
+          "rule": "",
+          "example": "REV_A"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "answer_label_id",
+          "references": "answer_behavior_labels.answer_label_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "behavior_code",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "target_answer_links",
+      "logical_name_ko": "시정 이슈–답변 연결",
+      "grain": "시정 이슈 × 중복 제거 답변 span 1개",
+      "primary_key": [
+        "target_answer_link_id"
+      ],
+      "columns": [
+        {
+          "name": "target_answer_link_id",
+          "logical_name_ko": "이슈–답변 연결 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "LINK_{target}_{answer_hash8}",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "qa_pair_id",
+          "logical_name_ko": "질의응답 쌍 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "qa FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_turn_key",
+          "logical_name_ko": "답변턴 키",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 span 키.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_label_id",
+          "logical_name_ko": "답변행태 라벨 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "라벨 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "primary_segment_no",
+          "logical_name_ko": "대표 세그먼트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "최고 점수 segment.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_segment_count",
+          "logical_name_ko": "원천 세그먼트 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "중복 회수 segment 수.",
+          "rule": "1 이상",
+          "example": "3"
+        },
+        {
+          "name": "relevance_weight",
+          "logical_name_ko": "관련도 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "qrels 2=1.0, 1=0.4.",
+          "rule": "0~1",
+          "example": "1.0"
+        },
+        {
+          "name": "qa_confidence",
+          "logical_name_ko": "Q/A 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.93"
+        },
+        {
+          "name": "label_confidence",
+          "logical_name_ko": "라벨 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "라벨 없으면 0",
+          "example": "0.92"
+        },
+        {
+          "name": "fractional_weight",
+          "logical_name_ko": "다중 마커 보정",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "동일 answer가 n marker 연결 시 1/n.",
+          "rule": "0<x<=1",
+          "example": "0.5"
+        },
+        {
+          "name": "final_weight",
+          "logical_name_ko": "최종 연결 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "relevance×qa×label×fractional.",
+          "rule": "0~1",
+          "example": "0.428"
+        },
+        {
+          "name": "dedupe_key",
+          "logical_name_ko": "중복 제거 키",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target_issue_id+answer_turn_key.",
+          "rule": "unique",
+          "example": ""
+        },
+        {
+          "name": "link_status",
+          "logical_name_ko": "연결 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "공개 가능 상태.",
+          "rule": "candidate|reviewed|accepted|rejected",
+          "example": "accepted"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "qa_pair_id",
+          "references": "qa_pairs.qa_pair_id"
+        },
+        {
+          "column": "answer_label_id",
+          "references": "answer_behavior_labels.answer_label_id"
+        },
+        {
+          "column": "primary_segment_no",
+          "references": "retrieval_segments.segment_no"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "status_canvas/link_status",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "completion_verifications",
+      "logical_name_ko": "이행 완료 검증",
+      "grain": "시정 이슈 × 검증 라운드 1개",
+      "primary_key": [
+        "verification_id"
+      ],
+      "columns": [
+        {
+          "name": "verification_id",
+          "logical_name_ko": "이행 검증 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "VER_{target}_R{round}",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "reported_status",
+          "logical_name_ko": "보고 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "공식 상태.",
+          "rule": "complete|active|uncomplete|null",
+          "example": "complete"
+        },
+        {
+          "name": "verification_status",
+          "logical_name_ko": "검증 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "추가 검증 결과.",
+          "rule": "confirmed_complete|partly_complete|evidence_insufficient|contradicted|not_reviewed",
+          "example": "evidence_insufficient"
+        },
+        {
+          "name": "verification_date",
+          "logical_name_ko": "검증 기준일",
+          "dtype": "date32",
+          "nullable": true,
+          "description": "외부 검증 기준일.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "verification_method",
+          "logical_name_ko": "검증 방법",
+          "dtype": "category",
+          "nullable": true,
+          "description": "검증 방법.",
+          "rule": "official_document|web_research|direct_check|mixed",
+          "example": "official_document"
+        },
+        {
+          "name": "source_count",
+          "logical_name_ko": "검증 출처 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "사용 출처 수.",
+          "rule": "0 이상",
+          "example": "2"
+        },
+        {
+          "name": "verification_note",
+          "logical_name_ko": "검증 메모",
+          "dtype": "string",
+          "nullable": false,
+          "description": "관찰 사실·한계.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "reviewer_id",
+          "logical_name_ko": "검증자 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "가명 ID.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "review_status",
+          "logical_name_ko": "검수 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "검증 검수.",
+          "rule": "draft|reviewed|approved|rejected",
+          "example": "reviewed"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required_for_cases",
+      "partitioning": "verification_status",
+      "note": ""
+    },
+    {
+      "layer": "L3_qa_behavior",
+      "name": "verification_sources",
+      "logical_name_ko": "이행 검증 출처",
+      "grain": "이행 검증 × 출처 1개",
+      "primary_key": [
+        "verification_source_id"
+      ],
+      "columns": [
+        {
+          "name": "verification_source_id",
+          "logical_name_ko": "검증 출처 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "VSRC_{verification}_{seq}",
+          "example": ""
+        },
+        {
+          "name": "verification_id",
+          "logical_name_ko": "이행 검증 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "verification FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_document_id",
+          "logical_name_ko": "원천 문서 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "등록 문서 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_url",
+          "logical_name_ko": "출처 URL",
+          "dtype": "string",
+          "nullable": true,
+          "description": "공개 URL.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_title",
+          "logical_name_ko": "출처 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "문서·페이지 제목.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_type",
+          "logical_name_ko": "출처 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "출처 종류.",
+          "rule": "official|news|institutional|dataset|other",
+          "example": "official"
+        },
+        {
+          "name": "published_date",
+          "logical_name_ko": "발행일",
+          "dtype": "date32",
+          "nullable": true,
+          "description": "발행 날짜.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "evidence_excerpt",
+          "logical_name_ko": "근거 발췌",
+          "dtype": "string",
+          "nullable": true,
+          "description": "짧은 발췌.",
+          "rule": "저작권 제한 준수",
+          "example": ""
+        },
+        {
+          "name": "archive_url",
+          "logical_name_ko": "보존 URL",
+          "dtype": "string",
+          "nullable": true,
+          "description": "아카이브 URL.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_hash",
+          "logical_name_ko": "출처 해시",
+          "dtype": "string",
+          "nullable": true,
+          "description": "저장 문서 해시.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "verification_id",
+          "references": "completion_verifications.verification_id"
+        },
+        {
+          "column": "source_document_id",
+          "references": "source_documents.source_document_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L4_vector",
+      "name": "embedding_models",
+      "logical_name_ko": "임베딩 모델",
+      "grain": "임베딩 모델·설정 1개",
+      "primary_key": [
+        "embedding_model_id"
+      ],
+      "columns": [
+        {
+          "name": "embedding_model_id",
+          "logical_name_ko": "임베딩 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "EMODEL_{name}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "model_name",
+          "logical_name_ko": "모델명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "공식 모델명.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "model_revision",
+          "logical_name_ko": "모델 리비전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "commit/tag.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "framework",
+          "logical_name_ko": "프레임워크",
+          "dtype": "category",
+          "nullable": false,
+          "description": "실행 프레임워크.",
+          "rule": "sentence_transformers|transformers|custom",
+          "example": "sentence_transformers"
+        },
+        {
+          "name": "tokenizer_name",
+          "logical_name_ko": "토크나이저명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "토크나이저.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "embedding_dim",
+          "logical_name_ko": "임베딩 차원",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "벡터 차원.",
+          "rule": "1 이상",
+          "example": "768"
+        },
+        {
+          "name": "max_tokens",
+          "logical_name_ko": "최대 토큰",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "입력 제한.",
+          "rule": "",
+          "example": "512"
+        },
+        {
+          "name": "pooling_method",
+          "logical_name_ko": "풀링 방식",
+          "dtype": "category",
+          "nullable": false,
+          "description": "문장 벡터 방식.",
+          "rule": "mean|cls|max|custom",
+          "example": "mean"
+        },
+        {
+          "name": "l2_normalized",
+          "logical_name_ko": "L2 정규화",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "출력 정규화 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "language_scope",
+          "logical_name_ko": "언어 범위",
+          "dtype": "string",
+          "nullable": true,
+          "description": "모델 언어.",
+          "rule": "",
+          "example": "ko|multilingual"
+        },
+        {
+          "name": "license_name",
+          "logical_name_ko": "모델 라이선스",
+          "dtype": "string",
+          "nullable": true,
+          "description": "사용 조건.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "config_json",
+          "logical_name_ko": "설정 JSON",
+          "dtype": "string",
+          "nullable": false,
+          "description": "모델 입력·배치 설정.",
+          "rule": "정렬 JSON",
+          "example": "{}"
+        },
+        {
+          "name": "model_hash",
+          "logical_name_ko": "모델 설정 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "모델+설정 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "등록 시각.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [],
+      "storage": "embedding_models.parquet + model registry json",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L4_vector",
+      "name": "entity_embeddings",
+      "logical_name_ko": "엔터티 임베딩",
+      "grain": "엔터티 × 모델 × 텍스트 버전 1개",
+      "primary_key": [
+        "embedding_id"
+      ],
+      "columns": [
+        {
+          "name": "embedding_id",
+          "logical_name_ko": "임베딩 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "EMB_{model}_{entity_type}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "entity_type",
+          "logical_name_ko": "엔터티 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "벡터 대상.",
+          "rule": "target_issue|question|answer|qa_context|segment",
+          "example": "answer"
+        },
+        {
+          "name": "entity_id",
+          "logical_name_ko": "엔터티 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "대상 PK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "text_variant",
+          "logical_name_ko": "텍스트 버전",
+          "dtype": "category",
+          "nullable": false,
+          "description": "임베딩 입력 버전.",
+          "rule": "core|expanded|normalized|qa_context",
+          "example": "normalized"
+        },
+        {
+          "name": "embedding_model_id",
+          "logical_name_ko": "임베딩 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "모델 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "vector_store_path",
+          "logical_name_ko": "벡터 저장 경로",
+          "dtype": "string",
+          "nullable": false,
+          "description": "Numpy/Arrow 벡터 파일.",
+          "rule": "웹 직접 노출 금지",
+          "example": ""
+        },
+        {
+          "name": "vector_row",
+          "logical_name_ko": "벡터 행 번호",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "0-based row.",
+          "rule": "",
+          "example": "0"
+        },
+        {
+          "name": "vector_hash",
+          "logical_name_ko": "벡터 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "float bytes 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "token_count",
+          "logical_name_ko": "토큰 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "실제 입력 토큰 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "was_truncated",
+          "logical_name_ko": "잘림 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "max_tokens 초과 여부.",
+          "rule": "",
+          "example": "false"
+        },
+        {
+          "name": "l2_normalized",
+          "logical_name_ko": "L2 정규화",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "벡터 정규화 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "embedding_model_id",
+          "references": "embedding_models.embedding_model_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "entity_embeddings.parquet + vector store",
+      "required_level": "required",
+      "partitioning": "embedding_model_id/entity_type/text_variant",
+      "note": ""
+    },
+    {
+      "layer": "L4_vector",
+      "name": "projection_models",
+      "logical_name_ko": "공통 투영 모델",
+      "grain": "임베딩 집합 투영 설정 1개",
+      "primary_key": [
+        "projection_id"
+      ],
+      "columns": [
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "PROJ_{embedding_model}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "embedding_model_id",
+          "logical_name_ko": "임베딩 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "임베딩 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "fit_scope",
+          "logical_name_ko": "학습 범위",
+          "dtype": "string",
+          "nullable": false,
+          "description": "공동 fit 범위.",
+          "rule": "all_statuses 필수",
+          "example": "all_statuses"
+        },
+        {
+          "name": "entity_types",
+          "logical_name_ko": "포함 엔터티 유형",
+          "dtype": "string",
+          "nullable": false,
+          "description": "표시용 구분 문자열.",
+          "rule": "",
+          "example": "target_issue|answer"
+        },
+        {
+          "name": "pca_components",
+          "logical_name_ko": "PCA 차원",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "PCA 출력 차원.",
+          "rule": "",
+          "example": "50"
+        },
+        {
+          "name": "umap_neighbors",
+          "logical_name_ko": "UMAP 이웃 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "n_neighbors.",
+          "rule": "",
+          "example": "30"
+        },
+        {
+          "name": "umap_min_dist",
+          "logical_name_ko": "UMAP 최소거리",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "min_dist.",
+          "rule": "",
+          "example": "0.08"
+        },
+        {
+          "name": "umap_metric",
+          "logical_name_ko": "UMAP 거리",
+          "dtype": "category",
+          "nullable": false,
+          "description": "metric.",
+          "rule": "cosine|euclidean",
+          "example": "cosine"
+        },
+        {
+          "name": "random_state",
+          "logical_name_ko": "난수 시드",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "재현성.",
+          "rule": "",
+          "example": "20260722"
+        },
+        {
+          "name": "input_count",
+          "logical_name_ko": "입력 벡터 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "fit 입력 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "model_path",
+          "logical_name_ko": "투영 모델 경로",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PCA·UMAP 직렬화.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_hash",
+          "logical_name_ko": "투영 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "입력+파라미터 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "x_min",
+          "logical_name_ko": "x 최솟값",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "공통 bounds.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "x_max",
+          "logical_name_ko": "x 최댓값",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "공통 bounds.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "y_min",
+          "logical_name_ko": "y 최솟값",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "공통 bounds.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "y_max",
+          "logical_name_ko": "y 최댓값",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "공통 bounds.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "embedding_model_id",
+          "references": "embedding_models.embedding_model_id"
+        }
+      ],
+      "storage": "projection_models.parquet + serialized PCA/UMAP",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L4_vector",
+      "name": "projection_points",
+      "logical_name_ko": "투영 좌표",
+      "grain": "엔터티 × 투영 모델 1개",
+      "primary_key": [
+        "projection_id",
+        "entity_type",
+        "entity_id"
+      ],
+      "columns": [
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "projection FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "entity_type",
+          "logical_name_ko": "엔터티 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "target_issue|answer|question|qa_context.",
+          "rule": "",
+          "example": "answer"
+        },
+        {
+          "name": "entity_id",
+          "logical_name_ko": "엔터티 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "대상 ID.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_x",
+          "logical_name_ko": "투영 x",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "2D 표시 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_y",
+          "logical_name_ko": "투영 y",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "2D 표시 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "topic_bin_id",
+          "logical_name_ko": "의미 구역 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "집계 bin FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "status_canvas",
+          "logical_name_ko": "처리상태",
+          "dtype": "category",
+          "nullable": true,
+          "description": "target 또는 연결 상태.",
+          "rule": "complete|active|unresolved",
+          "example": ""
+        },
+        {
+          "name": "point_weight",
+          "logical_name_ko": "점 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "표시·집계 기본 가중치.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "is_visible_default",
+          "logical_name_ko": "기본 표시 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "공개 기본 표시.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "projection_id",
+          "references": "projection_models.projection_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "projection_id/entity_type",
+      "note": ""
+    },
+    {
+      "layer": "L4_visual",
+      "name": "topic_bins",
+      "logical_name_ko": "의미 구역",
+      "grain": "공통 2D 공간의 고정 구역 1개",
+      "primary_key": [
+        "topic_bin_id"
+      ],
+      "columns": [
+        {
+          "name": "topic_bin_id",
+          "logical_name_ko": "의미 구역 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "BIN_{projection}_{q}_{r}",
+          "example": ""
+        },
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "projection FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bin_method",
+          "logical_name_ko": "구역화 방식",
+          "dtype": "category",
+          "nullable": false,
+          "description": "공간 구역 방식.",
+          "rule": "hexbin|quadtree|manual_topic_region",
+          "example": "hexbin"
+        },
+        {
+          "name": "bin_q",
+          "logical_name_ko": "hex q",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "axial q.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bin_r",
+          "logical_name_ko": "hex r",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "axial r.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "center_x",
+          "logical_name_ko": "구역 중심 x",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "고정 중심.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "center_y",
+          "logical_name_ko": "구역 중심 y",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "고정 중심.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "member_point_count",
+          "logical_name_ko": "구성 점 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "전체 상태 합.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "dominant_topic_label",
+          "logical_name_ko": "대표 주제 라벨",
+          "dtype": "string",
+          "nullable": true,
+          "description": "수작업 또는 target medoid.",
+          "rule": "자동 결론 아님",
+          "example": ""
+        },
+        {
+          "name": "representative_target_issue_id",
+          "logical_name_ko": "대표 시정 이슈 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "주제 대표 target.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "bin_version",
+          "logical_name_ko": "구역 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구역화 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "projection_id",
+          "references": "projection_models.projection_id"
+        },
+        {
+          "column": "representative_target_issue_id",
+          "references": "target_issues.target_issue_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "projection_id",
+      "note": ""
+    },
+    {
+      "layer": "L4_vector",
+      "name": "semantic_centroids",
+      "logical_name_ko": "의미 중심점",
+      "grain": "투영 × 집단 × centroid 유형 1개",
+      "primary_key": [
+        "centroid_id"
+      ],
+      "columns": [
+        {
+          "name": "centroid_id",
+          "logical_name_ko": "중심점 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "CENT_{projection}_{type}_{scope}",
+          "example": ""
+        },
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "projection FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "centroid_type",
+          "logical_name_ko": "중심점 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "중심 유형.",
+          "rule": "marker_semantic|answer_semantic|visual_barycenter|behavior_local",
+          "example": "marker_semantic"
+        },
+        {
+          "name": "status_canvas",
+          "logical_name_ko": "처리상태",
+          "dtype": "category",
+          "nullable": true,
+          "description": "상태 범위.",
+          "rule": "all|complete|active|unresolved",
+          "example": "complete"
+        },
+        {
+          "name": "answer_type_code",
+          "logical_name_ko": "답변유형 코드",
+          "dtype": "category",
+          "nullable": true,
+          "description": "A1~A8 또는 null.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "topic_bin_id",
+          "logical_name_ko": "의미 구역 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "local centroid 범위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "member_count",
+          "logical_name_ko": "구성원 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "고유 구성원 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "total_weight",
+          "logical_name_ko": "총 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "가중합.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "vector_store_path",
+          "logical_name_ko": "중심 벡터 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "고차원 centroid 저장.",
+          "rule": "visual barycenter는 null 가능",
+          "example": ""
+        },
+        {
+          "name": "vector_row",
+          "logical_name_ko": "중심 벡터 행",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "벡터 row.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_x",
+          "logical_name_ko": "화면 x",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "표시 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_y",
+          "logical_name_ko": "화면 y",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "표시 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "medoid_entity_type",
+          "logical_name_ko": "대표 엔터티 유형",
+          "dtype": "category",
+          "nullable": true,
+          "description": "실제 사례 유형.",
+          "rule": "",
+          "example": "answer"
+        },
+        {
+          "name": "medoid_entity_id",
+          "logical_name_ko": "대표 엔터티 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "실제 medoid ID.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "dispersion_score",
+          "logical_name_ko": "분산 점수",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "1-cos 평균.",
+          "rule": "0 이상",
+          "example": ""
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "projection_id",
+          "references": "projection_models.projection_id"
+        },
+        {
+          "column": "topic_bin_id",
+          "references": "topic_bins.topic_bin_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "projection_id/centroid_type",
+      "note": ""
+    },
+    {
+      "layer": "L4_visual",
+      "name": "atlas_nodes",
+      "logical_name_ko": "아틀라스 집계 노드",
+      "grain": "투영 × 상태 × 의미구역 × 답변유형 1개",
+      "primary_key": [
+        "atlas_node_id"
+      ],
+      "columns": [
+        {
+          "name": "atlas_node_id",
+          "logical_name_ko": "아틀라스 노드 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "NODE_{projection}_{status}_{bin}_{A#}",
+          "example": ""
+        },
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "projection FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "status_canvas",
+          "logical_name_ko": "처리상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "all|complete|active|unresolved.",
+          "rule": "",
+          "example": "active"
+        },
+        {
+          "name": "topic_bin_id",
+          "logical_name_ko": "의미 구역 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "bin FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_type_code",
+          "logical_name_ko": "답변유형 코드",
+          "dtype": "category",
+          "nullable": false,
+          "description": "A1~A8.",
+          "rule": "",
+          "example": "A5"
+        },
+        {
+          "name": "behavior_family",
+          "logical_name_ko": "행태 색상군",
+          "dtype": "category",
+          "nullable": false,
+          "description": "red|amber|blue.",
+          "rule": "",
+          "example": "amber"
+        },
+        {
+          "name": "anchor_x",
+          "logical_name_ko": "의미 앵커 x",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "가중 평균 원좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "anchor_y",
+          "logical_name_ko": "의미 앵커 y",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "가중 평균 원좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "display_x",
+          "logical_name_ko": "표시 x",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "collision 후 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "display_y",
+          "logical_name_ko": "표시 y",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "collision 후 좌표.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "raw_answer_count",
+          "logical_name_ko": "고유 답변 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "중복 제거 answer count.",
+          "rule": "",
+          "example": "31"
+        },
+        {
+          "name": "raw_link_count",
+          "logical_name_ko": "연결 수",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "target-answer link 수.",
+          "rule": "",
+          "example": "52"
+        },
+        {
+          "name": "weighted_mass",
+          "logical_name_ko": "가중 질량",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "relevance×confidence×probability 합.",
+          "rule": "",
+          "example": "19.2"
+        },
+        {
+          "name": "normalized_mass",
+          "logical_name_ko": "정규화 질량",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "상태 target 수로 정규화.",
+          "rule": "",
+          "example": "0.42"
+        },
+        {
+          "name": "node_radius",
+          "logical_name_ko": "노드 반경",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "화면 반경 px.",
+          "rule": "",
+          "example": "18.4"
+        },
+        {
+          "name": "mean_similarity",
+          "logical_name_ko": "평균 유사도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "고차원 평균 관련도.",
+          "rule": "",
+          "example": "0.71"
+        },
+        {
+          "name": "mean_qa_confidence",
+          "logical_name_ko": "평균 Q/A 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.92"
+        },
+        {
+          "name": "mean_label_confidence",
+          "logical_name_ko": "평균 라벨 신뢰도",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "0~1.",
+          "rule": "",
+          "example": "0.84"
+        },
+        {
+          "name": "marker_centroid_distance",
+          "logical_name_ko": "마커 중심 거리",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "고차원 1-cos.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "unresolved_null_share",
+          "logical_name_ko": "미확정 null 비율",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "unresolved 내부 null 비율.",
+          "rule": "다른 상태는 null",
+          "example": ""
+        },
+        {
+          "name": "node_version",
+          "logical_name_ko": "노드 계산 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "집계 계약 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "projection_id",
+          "references": "projection_models.projection_id"
+        },
+        {
+          "column": "topic_bin_id",
+          "references": "topic_bins.topic_bin_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "projection_id/status_canvas",
+      "note": ""
+    },
+    {
+      "layer": "L4_visual",
+      "name": "atlas_node_members",
+      "logical_name_ko": "아틀라스 노드 구성원",
+      "grain": "아틀라스 노드 × 이슈–답변 연결 1개",
+      "primary_key": [
+        "atlas_node_id",
+        "target_answer_link_id",
+        "answer_type_code"
+      ],
+      "columns": [
+        {
+          "name": "atlas_node_id",
+          "logical_name_ko": "아틀라스 노드 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "node FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "target_answer_link_id",
+          "logical_name_ko": "이슈–답변 연결 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "link FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_turn_key",
+          "logical_name_ko": "답변턴 키",
+          "dtype": "string",
+          "nullable": false,
+          "description": "답변 키.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_type_code",
+          "logical_name_ko": "답변유형 코드",
+          "dtype": "category",
+          "nullable": false,
+          "description": "A1~A8.",
+          "rule": "",
+          "example": "A5"
+        },
+        {
+          "name": "behavior_probability",
+          "logical_name_ko": "행태 확률",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "p_jk.",
+          "rule": "0~1",
+          "example": "1.0"
+        },
+        {
+          "name": "relevance_weight",
+          "logical_name_ko": "관련도 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "r_ij.",
+          "rule": "",
+          "example": "1.0"
+        },
+        {
+          "name": "membership_weight",
+          "logical_name_ko": "구성원 가중치",
+          "dtype": "Float64",
+          "nullable": false,
+          "description": "final_weight×p_jk.",
+          "rule": "",
+          "example": "0.428"
+        },
+        {
+          "name": "rank_in_node",
+          "logical_name_ko": "노드 내 대표 순위",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "대표 사례 순위.",
+          "rule": "1 이상",
+          "example": "1"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "atlas_node_id",
+          "references": "atlas_nodes.atlas_node_id"
+        },
+        {
+          "column": "target_answer_link_id",
+          "references": "target_answer_links.target_answer_link_id"
+        },
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        }
+      ],
+      "storage": "parquet",
+      "required_level": "required",
+      "partitioning": "atlas_node_id",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "media_assets",
+      "logical_name_ko": "미디어 자산",
+      "grain": "이미지·PDF·영상·정적 그래픽 1개",
+      "primary_key": [
+        "asset_id"
+      ],
+      "columns": [
+        {
+          "name": "asset_id",
+          "logical_name_ko": "자산 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "ASSET_{type}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "asset_type",
+          "logical_name_ko": "자산 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "자산 유형.",
+          "rule": "pdf|image|video|audio|svg|static_chart|poster",
+          "example": "pdf"
+        },
+        {
+          "name": "asset_title",
+          "logical_name_ko": "자산 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "표시 제목.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "source_url",
+          "logical_name_ko": "출처 URL",
+          "dtype": "string",
+          "nullable": true,
+          "description": "외부 URL.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "local_path",
+          "logical_name_ko": "로컬 경로",
+          "dtype": "string",
+          "nullable": true,
+          "description": "배포 경로.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "mime_type",
+          "logical_name_ko": "MIME 유형",
+          "dtype": "string",
+          "nullable": false,
+          "description": "MIME.",
+          "rule": "",
+          "example": "application/pdf"
+        },
+        {
+          "name": "width_px",
+          "logical_name_ko": "너비",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "이미지·영상 px.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "height_px",
+          "logical_name_ko": "높이",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "이미지·영상 px.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "duration_sec",
+          "logical_name_ko": "길이",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "영상·음성 초.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "sha256",
+          "logical_name_ko": "자산 해시",
+          "dtype": "string",
+          "nullable": true,
+          "description": "무결성 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "license_name",
+          "logical_name_ko": "라이선스",
+          "dtype": "string",
+          "nullable": true,
+          "description": "라이선스명.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "attribution",
+          "logical_name_ko": "출처 표기",
+          "dtype": "string",
+          "nullable": true,
+          "description": "표시 문구.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "alt_text",
+          "logical_name_ko": "대체 텍스트",
+          "dtype": "string",
+          "nullable": false,
+          "description": "접근성 설명.",
+          "rule": "공개 시각자산 필수",
+          "example": ""
+        },
+        {
+          "name": "public_visibility",
+          "logical_name_ko": "공개 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "프론트 노출 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "등록 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [],
+      "storage": "media_assets.parquet + assets-manifest.json",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "evidence_records",
+      "logical_name_ko": "증거 레코드",
+      "grain": "공개 가능한 시정 이슈–Q/A–결과 체인 1개",
+      "primary_key": [
+        "evidence_id"
+      ],
+      "columns": [
+        {
+          "name": "evidence_id",
+          "logical_name_ko": "증거 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "EVD_{target}_{answer_hash8}",
+          "example": ""
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "qa_pair_id",
+          "logical_name_ko": "질의응답 쌍 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "qa FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "target_answer_link_id",
+          "logical_name_ko": "이슈–답변 연결 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "link FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "answer_label_id",
+          "logical_name_ko": "답변행태 라벨 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "label FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "verification_id",
+          "logical_name_ko": "이행 검증 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "verification FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "primary_segment_no",
+          "logical_name_ko": "대표 세그먼트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "segment FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "meeting_id",
+          "logical_name_ko": "회의 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "meeting FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_start_no",
+          "logical_name_ko": "시작 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 범위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "page_end_no",
+          "logical_name_ko": "끝 페이지 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "원문 범위.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pdf_asset_id",
+          "logical_name_ko": "PDF 자산 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "media asset FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "evidence_status",
+          "logical_name_ko": "증거 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "공개 가능 상태.",
+          "rule": "draft|reviewed|publishable|blocked",
+          "example": "publishable"
+        },
+        {
+          "name": "public_visibility",
+          "logical_name_ko": "공개 여부",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "프론트 노출 여부.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "evidence_hash",
+          "logical_name_ko": "증거 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "구성 엔터티·텍스트 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "created_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "qa_pair_id",
+          "references": "qa_pairs.qa_pair_id"
+        },
+        {
+          "column": "target_answer_link_id",
+          "references": "target_answer_links.target_answer_link_id"
+        },
+        {
+          "column": "answer_label_id",
+          "references": "answer_behavior_labels.answer_label_id"
+        },
+        {
+          "column": "verification_id",
+          "references": "completion_verifications.verification_id"
+        },
+        {
+          "column": "primary_segment_no",
+          "references": "retrieval_segments.segment_no"
+        },
+        {
+          "column": "meeting_id",
+          "references": "meeting_registry.meeting_id"
+        },
+        {
+          "column": "pdf_asset_id",
+          "references": "media_assets.asset_id"
+        }
+      ],
+      "storage": "evidence_records.parquet + frontend evidence index",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "editorial_cases",
+      "logical_name_ko": "편집 사례",
+      "grain": "작품에 선택된 대표 사례 1개",
+      "primary_key": [
+        "case_id"
+      ],
+      "columns": [
+        {
+          "name": "case_id",
+          "logical_name_ko": "사례 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "CASE_{seq:03d}",
+          "example": "CASE_002"
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "evidence_id",
+          "logical_name_ko": "증거 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "evidence FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "case_type",
+          "logical_name_ko": "사례 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "편집 유형.",
+          "rule": "concrete_complete|ambiguous_complete|long_active|active_no_plan|repeated_deferral",
+          "example": "ambiguous_complete"
+        },
+        {
+          "name": "case_title",
+          "logical_name_ko": "사례 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "표시 제목.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "case_summary",
+          "logical_name_ko": "사례 요약",
+          "dtype": "string",
+          "nullable": false,
+          "description": "편집 요약.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "editorial_order",
+          "logical_name_ko": "편집 순서",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "Cases 챕터 순서.",
+          "rule": "",
+          "example": "2"
+        },
+        {
+          "name": "claim_level",
+          "logical_name_ko": "주장 강도",
+          "dtype": "category",
+          "nullable": false,
+          "description": "주장 허용 수준.",
+          "rule": "descriptive|interpretive|verified_contradiction",
+          "example": "descriptive"
+        },
+        {
+          "name": "verification_required",
+          "logical_name_ko": "외부 검증 필요",
+          "dtype": "boolean",
+          "nullable": false,
+          "description": "강한 사례 검증 필요.",
+          "rule": "",
+          "example": "true"
+        },
+        {
+          "name": "publish_status",
+          "logical_name_ko": "발행 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "사례 상태.",
+          "rule": "draft|reviewed|approved|published",
+          "example": "approved"
+        },
+        {
+          "name": "selected_by",
+          "logical_name_ko": "선정자 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "가명 편집자.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "selected_at",
+          "logical_name_ko": "선정 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "evidence_id",
+          "references": "evidence_records.evidence_id"
+        }
+      ],
+      "storage": "editorial_cases.parquet + MDX content",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "story_chapters",
+      "logical_name_ko": "스토리 챕터",
+      "grain": "스크롤텔링 챕터 1개",
+      "primary_key": [
+        "chapter_id"
+      ],
+      "columns": [
+        {
+          "name": "chapter_id",
+          "logical_name_ko": "챕터 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "CH_{order:02d}",
+          "example": "CH_04"
+        },
+        {
+          "name": "chapter_order",
+          "logical_name_ko": "챕터 순서",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "전역 순서.",
+          "rule": "프로젝트 전역 동일",
+          "example": "4"
+        },
+        {
+          "name": "chapter_slug",
+          "logical_name_ko": "챕터 슬러그",
+          "dtype": "string",
+          "nullable": false,
+          "description": "URL hash.",
+          "rule": "lowercase kebab-case",
+          "example": "answers"
+        },
+        {
+          "name": "chapter_title",
+          "logical_name_ko": "챕터 제목",
+          "dtype": "string",
+          "nullable": false,
+          "description": "표시 제목.",
+          "rule": "",
+          "example": "어떻게 답했나"
+        },
+        {
+          "name": "chapter_thesis",
+          "logical_name_ko": "챕터 명제",
+          "dtype": "string",
+          "nullable": false,
+          "description": "핵심 한 문장.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "chapter_summary",
+          "logical_name_ko": "챕터 요약",
+          "dtype": "string",
+          "nullable": true,
+          "description": "설명.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "route_hash",
+          "logical_name_ko": "라우트 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "해시 경로.",
+          "rule": "",
+          "example": "#answers"
+        },
+        {
+          "name": "visual_scene_id",
+          "logical_name_ko": "시각 장면 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "프론트 scene 식별자.",
+          "rule": "",
+          "example": "atlas_scene"
+        },
+        {
+          "name": "publish_status",
+          "logical_name_ko": "발행 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "발행 상태.",
+          "rule": "draft|reviewed|approved|published",
+          "example": "approved"
+        }
+      ],
+      "foreign_keys": [],
+      "storage": "story_chapters.parquet + story-manifest.json",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "story_events",
+      "logical_name_ko": "스토리 이벤트",
+      "grain": "챕터 내 편집 이벤트 1개",
+      "primary_key": [
+        "story_event_id"
+      ],
+      "columns": [
+        {
+          "name": "story_event_id",
+          "logical_name_ko": "스토리 이벤트 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "EVT_{chapter}_{seq:03d}",
+          "example": "EVT_CH04_003"
+        },
+        {
+          "name": "chapter_id",
+          "logical_name_ko": "챕터 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "chapter FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "display_order",
+          "logical_name_ko": "표시 순서",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "챕터 내 순서.",
+          "rule": "",
+          "example": "3"
+        },
+        {
+          "name": "event_date",
+          "logical_name_ko": "사건 날짜",
+          "dtype": "date32",
+          "nullable": true,
+          "description": "서사적 날짜.",
+          "rule": "UI 연도축과 별개",
+          "example": ""
+        },
+        {
+          "name": "event_type",
+          "logical_name_ko": "이벤트 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "시각 이벤트.",
+          "rule": "marker|question|answer|result|verification|editorial|metric",
+          "example": "answer"
+        },
+        {
+          "name": "target_issue_id",
+          "logical_name_ko": "시정 이슈 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "target FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "evidence_id",
+          "logical_name_ko": "증거 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "evidence FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "headline",
+          "logical_name_ko": "이벤트 헤드라인",
+          "dtype": "string",
+          "nullable": false,
+          "description": "짧은 문장.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "body",
+          "logical_name_ko": "이벤트 본문",
+          "dtype": "string",
+          "nullable": true,
+          "description": "설명 본문.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "visual_asset_id",
+          "logical_name_ko": "시각자산 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "asset FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "interaction_type",
+          "logical_name_ko": "인터랙션 유형",
+          "dtype": "category",
+          "nullable": false,
+          "description": "장면 동작.",
+          "rule": "none|reveal|line_draw|morph|open_evidence|horizontal_case",
+          "example": "reveal"
+        },
+        {
+          "name": "start_progress",
+          "logical_name_ko": "시작 진행률",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "챕터 0~1.",
+          "rule": "",
+          "example": "0.3"
+        },
+        {
+          "name": "end_progress",
+          "logical_name_ko": "끝 진행률",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "챕터 0~1.",
+          "rule": "end>=start",
+          "example": "0.6"
+        },
+        {
+          "name": "publish_status",
+          "logical_name_ko": "발행 상태",
+          "dtype": "category",
+          "nullable": false,
+          "description": "발행 상태.",
+          "rule": "draft|reviewed|approved|published",
+          "example": "approved"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "chapter_id",
+          "references": "story_chapters.chapter_id"
+        },
+        {
+          "column": "target_issue_id",
+          "references": "target_issues.target_issue_id"
+        },
+        {
+          "column": "evidence_id",
+          "references": "evidence_records.evidence_id"
+        },
+        {
+          "column": "visual_asset_id",
+          "references": "media_assets.asset_id"
+        }
+      ],
+      "storage": "story_events.parquet + chapter-events.json",
+      "required_level": "required",
+      "partitioning": "chapter_id",
+      "note": ""
+    },
+    {
+      "layer": "L5_editorial",
+      "name": "story_metrics",
+      "logical_name_ko": "스토리 지표",
+      "grain": "챕터 × 지표 1개",
+      "primary_key": [
+        "story_metric_id"
+      ],
+      "columns": [
+        {
+          "name": "story_metric_id",
+          "logical_name_ko": "스토리 지표 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "MET_{chapter}_{metric}",
+          "example": ""
+        },
+        {
+          "name": "chapter_id",
+          "logical_name_ko": "챕터 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "chapter FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "metric_name",
+          "logical_name_ko": "지표명",
+          "dtype": "string",
+          "nullable": false,
+          "description": "기계 판독명.",
+          "rule": "snake_case",
+          "example": "segment_count"
+        },
+        {
+          "name": "metric_label",
+          "logical_name_ko": "표시 라벨",
+          "dtype": "string",
+          "nullable": false,
+          "description": "UI 라벨.",
+          "rule": "",
+          "example": "검색 세그먼트"
+        },
+        {
+          "name": "value_numeric",
+          "logical_name_ko": "수치 값",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "수치형.",
+          "rule": "",
+          "example": "196686"
+        },
+        {
+          "name": "value_text",
+          "logical_name_ko": "텍스트 값",
+          "dtype": "string",
+          "nullable": true,
+          "description": "문자형.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "denominator",
+          "logical_name_ko": "분모",
+          "dtype": "Float64",
+          "nullable": true,
+          "description": "비율 분모.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "unit",
+          "logical_name_ko": "단위",
+          "dtype": "string",
+          "nullable": true,
+          "description": "건·% 등.",
+          "rule": "",
+          "example": "건"
+        },
+        {
+          "name": "calculation_rule",
+          "logical_name_ko": "계산 규칙",
+          "dtype": "string",
+          "nullable": false,
+          "description": "재현 가능한 규칙.",
+          "rule": "",
+          "example": "COUNT(*) FROM retrieval_segments"
+        },
+        {
+          "name": "source_table",
+          "logical_name_ko": "원천 테이블",
+          "dtype": "string",
+          "nullable": false,
+          "description": "계산 원천.",
+          "rule": "",
+          "example": "retrieval_segments"
+        },
+        {
+          "name": "source_filter",
+          "logical_name_ko": "원천 필터",
+          "dtype": "string",
+          "nullable": true,
+          "description": "SQL/Pandas 조건.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "chapter_id",
+          "references": "story_chapters.chapter_id"
+        },
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        }
+      ],
+      "storage": "story_metrics.parquet + metrics.json",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    },
+    {
+      "layer": "L6_frontend",
+      "name": "frontend_manifest",
+      "logical_name_ko": "프론트 데이터 매니페스트",
+      "grain": "프론트 전달 파일 1개",
+      "primary_key": [
+        "bundle_id"
+      ],
+      "columns": [
+        {
+          "name": "bundle_id",
+          "logical_name_ko": "번들 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "PK.",
+          "rule": "BUNDLE_{scope}_{hash8}",
+          "example": ""
+        },
+        {
+          "name": "app_version",
+          "logical_name_ko": "앱 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "프론트 앱 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        },
+        {
+          "name": "data_version",
+          "logical_name_ko": "데이터 버전",
+          "dtype": "string",
+          "nullable": false,
+          "description": "공개 데이터 버전.",
+          "rule": "",
+          "example": "1.0.0"
+        },
+        {
+          "name": "pipeline_run_id",
+          "logical_name_ko": "파이프라인 실행 ID",
+          "dtype": "string",
+          "nullable": false,
+          "description": "실행 FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "projection_id",
+          "logical_name_ko": "투영 모델 ID",
+          "dtype": "string",
+          "nullable": true,
+          "description": "Atlas 번들 projection FK.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "route_scope",
+          "logical_name_ko": "라우트 범위",
+          "dtype": "string",
+          "nullable": false,
+          "description": "사용 라우트·챕터.",
+          "rule": "",
+          "example": "answers"
+        },
+        {
+          "name": "lazy_load_group",
+          "logical_name_ko": "지연 로딩 그룹",
+          "dtype": "string",
+          "nullable": false,
+          "description": "로드 그룹.",
+          "rule": "",
+          "example": "atlas_active"
+        },
+        {
+          "name": "file_path",
+          "logical_name_ko": "파일 경로",
+          "dtype": "string",
+          "nullable": false,
+          "description": "배포 파일 경로.",
+          "rule": "",
+          "example": "data/atlas-nodes-active.json"
+        },
+        {
+          "name": "file_format",
+          "logical_name_ko": "파일 형식",
+          "dtype": "category",
+          "nullable": false,
+          "description": "형식.",
+          "rule": "json|arrow|csv|parquet|mdx",
+          "example": "json"
+        },
+        {
+          "name": "file_hash",
+          "logical_name_ko": "파일 해시",
+          "dtype": "string",
+          "nullable": false,
+          "description": "무결성 해시.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "row_count",
+          "logical_name_ko": "행 수",
+          "dtype": "Int64",
+          "nullable": true,
+          "description": "레코드 수.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "size_bytes",
+          "logical_name_ko": "파일 크기",
+          "dtype": "Int64",
+          "nullable": false,
+          "description": "bytes.",
+          "rule": "",
+          "example": ""
+        },
+        {
+          "name": "cache_policy",
+          "logical_name_ko": "캐시 정책",
+          "dtype": "category",
+          "nullable": false,
+          "description": "정적 캐시 정책.",
+          "rule": "immutable|revalidate|no_store",
+          "example": "immutable"
+        },
+        {
+          "name": "generated_at",
+          "logical_name_ko": "생성 시각",
+          "dtype": "timestamp[us, UTC]",
+          "nullable": false,
+          "description": "UTC.",
+          "rule": "",
+          "example": ""
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "pipeline_run_id",
+          "references": "pipeline_runs.pipeline_run_id"
+        },
+        {
+          "column": "projection_id",
+          "references": "projection_models.projection_id"
+        }
+      ],
+      "storage": "frontend_manifest.parquet + frontend-manifest.json",
+      "required_level": "required",
+      "partitioning": "none",
+      "note": ""
+    }
+  ]
+}

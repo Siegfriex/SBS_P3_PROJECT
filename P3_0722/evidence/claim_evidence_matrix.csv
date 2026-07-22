@@ -1,0 +1,5 @@
+﻿claim_id,claim,evidence_source,metric,claim_status
+C1,공식 marker는 2020·2022·2024 합계 297건이다,target_issues,row_count=297,safe
+C2,"회의록 corpus는 42 PDF와 196,686 segment를 포함한다",canonical manifest,traceability=1.0,safe
+C3,답변행태 적중은 자동 weak-rule 후보이다,answer_behavior_labels,manual gold=0,limit
+C4,공식 complete는 실제 완료 검증과 다르다,completion_verifications,not_reviewed,limit

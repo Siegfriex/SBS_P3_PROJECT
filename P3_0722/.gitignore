@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Local Hugging Face model cache; download/reuse it outside Git history.
+models/

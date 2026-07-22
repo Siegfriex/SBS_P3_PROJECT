@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.1.0-implemented",
+  "parser_version": "1.0.1",
+  "random_state": 20260722,
+  "target_years": [2020, 2022, 2024],
+  "temporal_policy": "strict_audit_cycle",
+  "retrieval": {
+    "char_ngram_min": 3,
+    "char_ngram_max": 5,
+    "word_ngram_min": 1,
+    "word_ngram_max": 2,
+    "char_weight": 0.65,
+    "word_weight": 0.35,
+    "action_text_weight": 0.25,
+    "top_k": 50,
+    "rrf_k": 60,
+    "char_max_features": 120000,
+    "word_max_features": 80000
+  },
+  "qa": {
+    "role_weight": 0.35,
+    "adjacency_weight": 0.25,
+    "segment_weight": 0.25,
+    "parse_weight": 0.15,
+    "min_confidence": 0.7,
+    "max_procedural_gap": 2,
+    "max_answers_per_question": 4
+  },
+  "review": {
+    "qrels_pilot_rows": 400,
+    "links_per_target": 5,
+    "behavior_sample_per_code": 30,
+    "unlabeled_answer_sample": 100,
+    "multi_label_sample": 100
+  },
+  "projection": {
+    "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "embedding_dim": 384,
+    "pca_components": 50,
+    "umap_neighbors": 30,
+    "umap_min_dist": 0.08,
+    "grid_bins": 8,
+    "node_radius_min": 5.0,
+    "node_radius_max": 42.0
+  }
+}

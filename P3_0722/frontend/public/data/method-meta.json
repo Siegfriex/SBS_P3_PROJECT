@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.1.0-implemented",
+  "retrieval": "sparse top50 + dense MiniLM rerank",
+  "qrels": "pending manual review",
+  "qa": "rule candidate",
+  "behavior": "weak_rule",
+  "completionVerification": "not_reviewed"
+}

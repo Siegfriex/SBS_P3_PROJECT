@@ -1,0 +1,5 @@
+﻿visual_id,title,figure_path,claim_id,editorial_limit
+V1,공식 상태 구성,figures/01_target_status_by_year.png,H1,확정 marker 분모
+V2,답변행태 weak-rule,figures/02_behavior_weak_rule_counts.png,taxonomy diagnostic,Gold 아님
+V3,답변 길이와 Q/A confidence,figures/03_answer_length_qa_confidence.png,H3,인과 해석 금지
+V4,파이프라인 규모,figures/04_pipeline_scale.png,scale,로그축

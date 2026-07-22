@@ -1,0 +1,10 @@
+﻿dataset,row_count,analysis_unit
+meeting_registry,42,회의록 PDF
+pages,4495,물리 페이지
+blocks,293717,물리 block
+speaker_turns,65590,canonical turn
+retrieval_segments,196686,검색 window
+target_issues,297,확정 marker
+target_segment_candidates,14850,시간 적격 sparse 후보
+answer_units,25931,역할 기반 답변 후보
+target_answer_links,1476,target-answer 후보 연결

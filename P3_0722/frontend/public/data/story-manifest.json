@@ -1,0 +1,78 @@
+{
+  "version": "3.0.0",
+  "pipelineRunId": "RUN_20260722T052913Z_D9E75E",
+  "chapters": [
+    {
+      "id": "prologue",
+      "order": 0,
+      "title": "질문은 남았다",
+      "eventIds": [
+        "EVT_CH_00_001"
+      ]
+    },
+    {
+      "id": "scale",
+      "order": 1,
+      "title": "기록의 규모",
+      "eventIds": [
+        "EVT_CH_01_001"
+      ]
+    },
+    {
+      "id": "record",
+      "order": 2,
+      "title": "한 이슈의 증거선",
+      "eventIds": [
+        "EVT_CH_02_001"
+      ]
+    },
+    {
+      "id": "gap",
+      "order": 3,
+      "title": "이행의 간극",
+      "eventIds": [
+        "EVT_CH_03_001"
+      ]
+    },
+    {
+      "id": "answers",
+      "order": 4,
+      "title": "어떻게 답했나",
+      "eventIds": [
+        "EVT_CH_04_001"
+      ]
+    },
+    {
+      "id": "cases",
+      "order": 5,
+      "title": "대표 사례",
+      "eventIds": [
+        "EVT_CH_05_001",
+        "EVT_CH05_002",
+        "EVT_CH05_003",
+        "EVT_CH05_004",
+        "EVT_CH05_005",
+        "EVT_CH05_006",
+        "EVT_CH05_007",
+        "EVT_CH05_008",
+        "EVT_CH05_009"
+      ]
+    },
+    {
+      "id": "remains",
+      "order": 6,
+      "title": "남은 질문",
+      "eventIds": [
+        "EVT_CH_06_001"
+      ]
+    },
+    {
+      "id": "method",
+      "order": 7,
+      "title": "방법과 원문",
+      "eventIds": [
+        "EVT_CH_07_001"
+      ]
+    }
+  ]
+}

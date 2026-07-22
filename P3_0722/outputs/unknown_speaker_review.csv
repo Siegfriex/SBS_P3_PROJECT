@@ -1,0 +1,216 @@
+﻿meeting_speaker_id,meeting_id,speaker_raw,speaker_name,speaker_role_raw,speaker_role_normalized,speaker_org,speaker_side,speaker_class,is_question_eligible,is_answer_eligible,parse_rule,parse_confidence,manual_override
+MSP_050308_9BBD2F7C,050308,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050308_3451EB1A,050308,문화체육관광부장관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050308_A7233D21,050308,국립국어원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050308_F02DC34D,050308,李達坤,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050350_A5070B4B,050350,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050430_4D696DC1,050430,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050492_8A1CD6DE,050492,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050492_FD26D237,050492,문화체육관광부체육협력관 박용철,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_004B4A6B,050492,"문화체육관광부체육협력관 박용철 예, 그렇게",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_CEB0ED2E,050492,문화체육관광부체육협력관 박용철 저희도 반,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_83652109,050492,"문화체육관광부체육협력관 박용철 예, 알겠습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_9D6E3E04,050492,입법조사관 오동환 그렇게는 말씀드린 적 없,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_4F59617E,050492,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_C25F2DBD,050492,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050492_29940B84,050492,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050606_8D490ABD,050606,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050606_C25F2DBD,050606,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050606_29940B84,050606,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050606_4F59617E,050606,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_BB8F3DB2,050615,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050615_8960B30C,050615,문화체육관광부정책기획관 김정훈,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_2AE4C80D,050615,"문화체육관광부정책기획관 김정훈 예, 문화정",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_944F9168,050615,문화체육관광부정책기획관 김정훈 예.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_C25F2DBD,050615,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_29940B84,050615,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050615_4F59617E,050615,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050673_30B3A2AD,050673,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_050673_C25F2DBD,050673,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_050673_29940B84,050673,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051354_70BEA0B0,051354,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051354_4F59617E,051354,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051354_29940B84,051354,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_CEB340AB,051381,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051381_A6E694AF,051381,국립고궁박물관전시홍보과 임경희 도서에 관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_EF2763ED,051381,국립고궁박물관전시홍보과 임경희 지금 말씀,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_09361258,051381,"국립고궁박물관전시홍보과 임경희 아니, 그렇",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_73A129BB,051381,국립고궁박물관전시홍보과 임경희,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_F978B9A2,051381,국립고궁박물관전시홍보과 임경희 그것은 확,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_7C57DF5F,051381,국립고궁박물관전시홍보과 임경희 예.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_3F976B0D,051381,문화재청차장 강경환 예.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_855682FA,051381,문화재청차장 강경환 문화재보호법에 따라서,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_84AC42FE,051381,"문화재청차장 강경환 예, 그렇습니다.",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_F5516212,051381,문화재청차장 강경환 문화재 안전관리에 더욱,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051381_4F59617E,051381,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051402_B86187E9,051402,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051402_075CE870,051402,문화재청차장 강경환 회수를 위한 원칙을 훼손,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051402_29940B84,051402,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051424_07DF97EA,051424,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051424_90D71FD1,051424,문화체육관광부체육협력관 강대금 체육협력관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051424_56358156,051424,문화체육관광부체육협력관 강대금 답변은 IOC,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051424_A0582CE0,051424,문화체육관광부체육협력관 강대금 그 이후에,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051424_C25F2DBD,051424,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_F1C755B5,051487,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051487_CEADBFF9,051487,한국콘텐츠진흥원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_C3C056BB,051487,대한민국예술원사무국장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_56ECC645,051487,문화체육관광부콘텐츠정책국장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_B212A397,051487,문화체육관광부저작권국장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_9FF48289,051487,한국출판문화산업진흥원사무처장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_F21ACAA2,051487,김예지,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_651D3E41,051487,최형두,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_71C1F473,051487,한국저작권보호원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_E9149A06,051487,국립아시아문화전당장직무대리이용신,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_B3D72824,051487,국립아시아문화전당장직무대리,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_96C282DC,051487,게임물관리위원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051487_B3EC2793,051487,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051535_DECF690C,051535,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051535_C25F2DBD,051535,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051558_67749BD5,051558,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_051558_C25F2DBD,051558,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_051558_4F59617E,051558,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052229_9D5AF56D,052229,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052229_29940B84,052229,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052229_4F59617E,052229,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052280_C2B26A66,052280,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052280_29940B84,052280,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052315_B987DDD6,052315,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052315_29940B84,052315,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052315_4F59617E,052315,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_1A92BF07,052364,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052364_85B005C3,052364,국립현대미술관장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_B2C7FF17,052364,류호정,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_849B7D21,052364,황보승희,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_FD425353,052364,국립중앙박물관장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_BDBDF19A,052364,이상헌,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_2B89CD18,052364,문화체육관광부예술정책관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_DB0C78EB,052364,문화체육관광부지역문화정책관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_2AE362AC,052364,한국문화예술교육진흥원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_043BA023,052364,대한민국역사박물관장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_4D90F952,052364,국립한글박물관장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_30ED02F8,052364,한국문학번역원장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_B3EC2793,052364,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052364_C105FB67,052364,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052423_5FCCE248,052423,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052423_C25F2DBD,052423,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052423_4F59617E,052423,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_48E7AD26,052493,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052493_90D71FD1,052493,문화체육관광부체육협력관 강대금 체육협력관,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_137C43AF,052493,"문화체육관광부체육협력관 강대금 예, 알겠습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_D43CF7C2,052493,문화체육관광부체육협력관 강대금 경기장 총,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_94029FE9,052493,"문화체육관광부체육협력관 강대금 예, 그렇습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_F2A05DEA,052493,문화체육관광부체육협력관 강대금 가리왕산은,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_C25F2DBD,052493,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052493_4F59617E,052493,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_EA521D2B,052556,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_052556_FCDE3E0D,052556,국립아시아문화전당장 이강현 6년 4개월 동안,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_ABF567FD,052556,"국립아시아문화전당장 이강현 예, 그러겠습니",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_0595A55E,052556,"국립아시아문화전당장 이강현 예, 그렇습니다.",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_1CBC8D1E,052556,국립아시아문화전당장 이강현 전당은 모두 1,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_E54A6BBD,052556,국립아시아문화전당장 이강현 그러나 저희가,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_B3AA9848,052556,국립아시아문화전당장 이강현 그렇습니다.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_5910585C,052556,"국립아시아문화전당장 이강현 예, 내년도 예",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_B7445540,052556,국립국악중.고등학교장 모정미 위원님 말씀,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_C25F2DBD,052556,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_052556_29940B84,052556,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_022D632E,053329,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053329_BE5206CB,053329,문화체육관광부정책기획관 신은향 예.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_C6FBFF69,053329,"문화체육관광부정책기획관 신은향 예, 들었습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_AB4BF14B,053329,문화체육관광부정책기획관 신은향,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_734D4051,053329,"문화체육관광부정책기획관 신은향 예, 알겠습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_29940B84,053329,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053329_4F59617E,053329,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_21EB4B72,053357,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053357_308B592D,053357,국립아시아문화전당장 이강현 위원님 말씀에,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_144E679C,053357,"국립아시아문화전당장 이강현 예, 더 노력하",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_F928D9C3,053357,국립아시아문화전당장 이강현 예.,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_0595A55E,053357,"국립아시아문화전당장 이강현 예, 그렇습니다.",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_1519DFE6,053357,"국립아시아문화전당장 이강현 예, 우선 저희",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_C3B6DD75,053357,국립아시아문화전당장 이강현 그래서 그런 불,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_1DFCE38E,053357,"국립아시아문화전당장 이강현 예, 열심히 노",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_C25F2DBD,053357,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053357_29940B84,053357,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053389_168056CE,053389,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053389_29940B84,053389,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053389_4F59617E,053389,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053501_E19636DD,053501,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053501_734D4051,053501,"문화체육관광부정책기획관 신은향 예, 알겠습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053501_C25F2DBD,053501,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053501_29940B84,053501,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053501_4F59617E,053501,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_B0CA8139,053598,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053598_C04E079B,053598,문화체육관광부체육협력관 이정미,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_B299F369,053598,"문화체육관광부체육협력관 이정미 예, 그렇게",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_7659CD2A,053598,"문화체육관광부체육협력관 이정미 예, 나왔습",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_FA3F04E2,053598,"문화체육관광부체육협력관 이정미 예, 보고드",,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_C25F2DBD,053598,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_29940B84,053598,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053598_4F59617E,053598,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053680_568AFC83,053680,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053680_29940B84,053680,출석 증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053680_4F59617E,053680,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053740_02698F86,053740,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_053740_C25F2DBD,053740,정부측 및 기타 참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_053740_4F59617E,053740,출석 참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054235_4BD710D2,054235,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054235_A7ADDDB4,054235,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054235_C105FB67,054235,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054269_15B8EFEC,054269,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054269_AC5CFFCC,054269,국가유산청기획조정관황권순,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054269_C105FB67,054269,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054345_2741D714,054345,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054345_9FD5316A,054345,한국정책방송원방송기획관이성구,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054345_CC464896,054345,한국정책방송원방송보도부조대익,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054345_B3EC2793,054345,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054345_A7ADDDB4,054345,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054345_C105FB67,054345,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_9DC22A57,054435,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054435_9D4BBA13,054435,한국콘텐츠진흥원신기술융합콘텐츠팀이혜은,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_7366EAC2,054435,문화체육관광부정책기획관이정미,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_51A4857C,054435,국립아시아문화전당장이강현,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_B3EC2793,054435,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_A7ADDDB4,054435,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054435_C105FB67,054435,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054519_5C9E1550,054519,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054519_B3EC2793,054519,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054576_FEC50061,054576,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054576_86C66EB1,054576,문화체육관광부체육협력관송윤석,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054576_4D102D39,054576,김재원,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054576_B3EC2793,054576,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054576_A7ADDDB4,054576,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054576_C105FB67,054576,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054622_B1D37774,054622,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_054622_A7ADDDB4,054622,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_054622_C105FB67,054622,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053479_A899D3C2,N053479,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053479_86C1C1DA,N053479,문화체육관광부대변인김재현,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053479_A7ADDDB4,N053479,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053479_C105FB67,N053479,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053480_D9193733,N053480,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053480_FEEA1194,N053480,한국언론진흥재단이사장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053480_2A4162F1,N053480,한국언론진흥재단경영본부장,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053480_B3EC2793,N053480,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053480_A7ADDDB4,N053480,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053481_0D9F6AD5,N053481,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053481_2AEE9423,N053481,국가유산청차장최보근,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053481_A7ADDDB4,N053481,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053481_C105FB67,N053481,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053482_A0E76E21,N053482,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053482_B3EC2793,N053482,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053482_A7ADDDB4,N053482,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053482_C105FB67,N053482,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053483_2E4F16A9,N053483,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053483_B3EC2793,N053483,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053483_C105FB67,N053483,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053485_9A976C45,N053485,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053485_DE638B2D,N053485,문화체육관광부체육협력관최성희,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053485_E1382A15,N053485,참고인000,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053485_B3EC2793,N053485,정부측및기타참석자,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053485_A7ADDDB4,N053485,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053485_C105FB67,N053485,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053487_EDD71C63,N053487,,,,,,unknown,unknown,False,False,ORPHAN,1.0,False
+MSP_N053487_86C1C1DA,N053487,문화체육관광부대변인김재현,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053487_AC5CFFCC,N053487,국가유산청기획조정관황권순,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053487_DE638B2D,N053487,문화체육관광부체육협력관최성희,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053487_A7ADDDB4,N053487,출석증인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False
+MSP_N053487_C105FB67,N053487,출석참고인,,,,,unknown,unknown,False,False,UNRESOLVED,0.2,False

@@ -1,0 +1,4 @@
+﻿hypothesis,article_question,unit,test,statistic,p_value,effect_size,effect_size_name,safe_sentence,avoid,evidence_level
+H1,공식 처리상태 구성은 marker 연도별로 다른가?,target_issue,chi_square,6.522533442015433,0.0383398014129987,0.14819376525568823,Cramer's V,확정 marker의 공식 상태 구성은 연도별 차이를 보였고 효과크기는 0.15였다.,연도 자체가 이행 상태를 만들었다.,descriptive
+H2,공식 상태별 top sparse 검색 점수 분포가 다른가?,target_issue_top1,Mann-Whitney U,10799.0,0.9961861586608347,0.00037054191755436783,rank-biserial approximation,검색 점수 차이는 retrieval 후보 품질 진단이며 이행 상태의 원인으로 해석하지 않는다.,완료 여부가 회의록 답변 유사도를 결정했다.,diagnostic
+H3,답변 길이와 규칙 기반 Q/A confidence가 단조 관계를 보이는가?,answer_unit,Spearman,-0.021649673762929887,0.0004893665413125983,-0.021649673762929887,Spearman rho,길이와 Q/A confidence의 관계는 resolver 진단값이며 답변 품질의 척도가 아니다.,긴 답변이 더 정확하거나 성실하다.,diagnostic

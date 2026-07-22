@@ -1,0 +1,72 @@
+[
+  {
+    "story_metric_id": "MET_CH_01_meeting_count",
+    "chapter_id": "CH_01",
+    "metric_name": "meeting_count",
+    "metric_label": "회의록",
+    "value_numeric": 42,
+    "value_text": null,
+    "denominator": null,
+    "unit": "건",
+    "calculation_rule": "COUNT meeting_registry",
+    "source_table": "meeting_registry",
+    "source_filter": null,
+    "pipeline_run_id": "RUN_20260722T052913Z_D9E75E"
+  },
+  {
+    "story_metric_id": "MET_CH_01_page_count",
+    "chapter_id": "CH_01",
+    "metric_name": "page_count",
+    "metric_label": "페이지",
+    "value_numeric": 4495,
+    "value_text": null,
+    "denominator": null,
+    "unit": "쪽",
+    "calculation_rule": "COUNT pages",
+    "source_table": "pages",
+    "source_filter": null,
+    "pipeline_run_id": "RUN_20260722T052913Z_D9E75E"
+  },
+  {
+    "story_metric_id": "MET_CH_01_target_count",
+    "chapter_id": "CH_01",
+    "metric_name": "target_count",
+    "metric_label": "확정 marker",
+    "value_numeric": 297,
+    "value_text": null,
+    "denominator": null,
+    "unit": "건",
+    "calculation_rule": "COUNT target_issues",
+    "source_table": "target_issues",
+    "source_filter": null,
+    "pipeline_run_id": "RUN_20260722T052913Z_D9E75E"
+  },
+  {
+    "story_metric_id": "MET_CH_04_answer_unit_count",
+    "chapter_id": "CH_04",
+    "metric_name": "answer_unit_count",
+    "metric_label": "기관측 답변 후보",
+    "value_numeric": 25931,
+    "value_text": null,
+    "denominator": null,
+    "unit": "건",
+    "calculation_rule": "COUNT answer_units",
+    "source_table": "answer_units",
+    "source_filter": null,
+    "pipeline_run_id": "RUN_20260722T052913Z_D9E75E"
+  },
+  {
+    "story_metric_id": "MET_CH_06_gold_qrels_count",
+    "chapter_id": "CH_06",
+    "metric_name": "gold_qrels_count",
+    "metric_label": "Gold qrels",
+    "value_numeric": 0,
+    "value_text": null,
+    "denominator": null,
+    "unit": "건",
+    "calculation_rule": "COUNT target_segment_qrels",
+    "source_table": "target_segment_qrels",
+    "source_filter": null,
+    "pipeline_run_id": "RUN_20260722T052913Z_D9E75E"
+  }
+]
