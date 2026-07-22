@@ -27,3 +27,4 @@ env/
 Thumbs.db
 .vscode/
 .idea/
+data_parse/audit_minutes_pdf_etl/audit_minutes.sqlite
